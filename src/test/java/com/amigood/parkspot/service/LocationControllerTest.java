@@ -1,5 +1,6 @@
 package com.amigood.parkspot.service;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
 
 /**
@@ -38,7 +40,9 @@ public class LocationControllerTest {
         requestMock.setMethod("GET");
         requestMock.setRequestURI("/location/40.697488,-73.979681");
 
-        handlerAdapter.handle(requestMock, responseMock, controller);
+        ModelAndView model = handlerAdapter.handle(requestMock, responseMock, controller);
+
+        Assert.assertEquals("location", model.getViewName());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.amigood.parkspot.service;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LocationController {
 
     @RequestMapping(method=RequestMethod.GET, value="/location/{coordinates}")
-    public String getAddress(@PathVariable String coordinates) {
-        return coordinates;
+    public String getAddress(@PathVariable String coordinates, Model model) {
+        model.addAttribute("location", coordinates);
+        return "location";
     }
 
 }
