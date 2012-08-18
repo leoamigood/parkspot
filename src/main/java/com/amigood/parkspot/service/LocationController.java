@@ -16,8 +16,8 @@ public class LocationController {
 
     @RequestMapping(method=RequestMethod.GET, value="/location/{coordinates}")
     public String getAddress(@PathVariable String coordinates, Model model) {
-        model.addAttribute("location", coordinates);
-        return "location";
+        model.addAttribute("value", coordinates);
+        return "result";
     }
 
 }
