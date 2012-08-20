@@ -1,5 +1,6 @@
 package com.amigood.parkspot.service;
 
+import com.amigood.park.LocationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,7 @@ public class LocationControllerTest {
     @Test
     public void testGetAddress() throws Exception {
         requestMock.setMethod("GET");
-        requestMock.setRequestURI("/location/40.697488,-73.979681");
+        requestMock.setRequestURI("/location/40.607234,-73.983338");
 
         ModelAndView model = handlerAdapter.handle(requestMock, responseMock, controller);
     }

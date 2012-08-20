@@ -8,15 +8,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  *         Time: 1:08 PM
  */
 @XmlRootElement
-public class Location {
+public class Coordinates {
 
     private Float longitude;
     private Float latitude;
 
-    public Location() {
+    public Coordinates() {
     }
 
-    public Location(Float longitude, Float latitude) {
+    public Coordinates(Float longitude, Float latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }

@@ -10,7 +10,7 @@
     <bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="classesToBeBound">
             <list>
-                <value>com.amigood.domain.Location</value>
+                <value>com.amigood.domain.Coordinates</value>
             </list>
         </property>
     </bean>
