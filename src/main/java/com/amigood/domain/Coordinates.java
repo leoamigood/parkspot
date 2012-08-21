@@ -10,30 +10,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Coordinates {
 
-    private Float longitude;
-    private Float latitude;
+    @Override
+    public String toString() {
+        return String.format("%s,%s", longitude, latitude);
+    }
+
+    private String longitude;
+    private String latitude;
 
     public Coordinates() {
     }
 
-    public Coordinates(Float longitude, Float latitude) {
+    public Coordinates(String longitude, String latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public Float getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public Float getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 }

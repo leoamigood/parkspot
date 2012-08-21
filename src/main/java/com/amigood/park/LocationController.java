@@ -21,12 +21,12 @@ public class LocationController {
     @Autowired
     private LocationManager manager;
 
-    @RequestMapping(method=RequestMethod.GET, value="/location/{latitude},{longitude}")
+    // Using regexp matching as setting useDefaultSuffixPattern to false
+    // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
+    @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     public String getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
-        Coordinates coordinates = new Coordinates(Float.parseFloat(latitude), Float.parseFloat(longitude));
 
-        PostalAddress address = manager.geoCode(coordinates);
-
+        PostalAddress address = manager.geoCode(new Coordinates(latitude, longitude));
         model.addAttribute("address", address);
         return "location";
     }
