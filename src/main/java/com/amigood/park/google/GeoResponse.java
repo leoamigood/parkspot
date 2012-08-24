@@ -21,6 +21,4 @@ public class GeoResponse {
     @JsonProperty("results")
     @XmlElement(name = "result")
     private List<AddressComponent> components;
-
-//    private List<Result> results;
 }
