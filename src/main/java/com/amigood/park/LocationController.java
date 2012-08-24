@@ -27,7 +27,7 @@ public class LocationController {
     @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     public String getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
 
-        GeoResponse response = manager.geoCode(new Coordinates(latitude, longitude), Protocol.JSON);
+        GeoResponse response = manager.geoCode(new Coordinates(latitude, longitude), Protocol.XML);
         model.addAttribute("response", response);
         return "location";
     }
