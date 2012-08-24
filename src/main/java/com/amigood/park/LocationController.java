@@ -1,7 +1,8 @@
 package com.amigood.park;
 
 import com.amigood.domain.Coordinates;
-import com.amigood.domain.PostalAddress;
+import com.amigood.domain.Protocol;
+import com.amigood.park.google.GeoResponse;
 import com.amigood.park.service.LocationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +27,8 @@ public class LocationController {
     @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     public String getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
 
-        PostalAddress address = manager.geoCode(new Coordinates(latitude, longitude));
-        model.addAttribute("address", address);
+        GeoResponse response = manager.geoCode(new Coordinates(latitude, longitude), Protocol.JSON);
+        model.addAttribute("response", response);
         return "location";
     }
 

@@ -1,7 +1,8 @@
 package com.amigood.park.service;
 
 import com.amigood.domain.Coordinates;
-import com.amigood.domain.PostalAddress;
+import com.amigood.domain.Protocol;
+import com.amigood.park.google.GeoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +20,10 @@ public class LocationManagerImpl implements LocationManager {
 
     private String api = "http://maps.googleapis.com/maps/api";
 
-    public PostalAddress geoCode(Coordinates coordinates) {
-        String url = String.format("%s/geocode/json?latlng=%s&sensor=false", api, coordinates);
+    public GeoResponse geoCode(Coordinates coordinates, Protocol protocol) {
+        String url = String.format("%s/geocode/%s?latlng=%s&sensor=false", api, protocol, coordinates);
 
-        return rest.getForEntity(url, PostalAddress.class).getBody();
+        GeoResponse response = rest.getForEntity(url, GeoResponse.class).getBody();
+        return response;
     }
 }

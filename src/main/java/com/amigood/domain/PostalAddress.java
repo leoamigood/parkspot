@@ -1,10 +1,13 @@
 package com.amigood.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author leo@amigood.com | Leo Amigud, Chain Tale LLC
  *         Date: 8/19/12
  *         Time: 4:40 PM
  */
+@XmlRootElement
 public class PostalAddress {
 
     private String apt;

@@ -17,22 +17,30 @@
         </property>
     </bean>
 
+    <bean id="jaxbAnnotationIntrospector" class="org.codehaus.jackson.xc.JaxbAnnotationIntrospector" />
+    <bean id="jaxbJacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+        <property name="serializationConfig.annotationIntrospector" ref="jaxbAnnotationIntrospector" />
+        <property name="deserializationConfig.annotationIntrospector" ref="jaxbAnnotationIntrospector" />
+    </bean>
+
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-    <property name="order" value="1" />
-    <property name="mediaTypes">
-        <map>
-            <entry key="json" value="application/json" />
-            <entry key="xml" value="application/xml"/>
-        </map>
-    </property>
-    <property name="defaultViews">
-        <list>
-            <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
-            <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
-                <constructor-arg ref="jaxbMarshaller" />
-            </bean>
-        </list>
-    </property>
+        <property name="order" value="1" />
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+                <entry key="xml" value="application/xml"/>
+            </map>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+                    <property name="objectMapper" ref="jaxbJacksonObjectMapper"/>
+                </bean>
+                <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+                    <constructor-arg ref="jaxbMarshaller" />
+                </bean>
+            </list>
+        </property>
     </bean>
 
     <context:component-scan base-package="com.amigood"/>
