@@ -17,19 +17,23 @@ public class AddressComponent {
 
         @JsonCreator
         public Entry() {}
+
+        @XmlElement(name = "type")
+        @JsonProperty
+        private List<String> types;
+
+        @XmlElement(name = "long_name")
+        @JsonProperty("long_name")
+        private String longName;
+
+        @XmlElement(name = "short_name")
+        @JsonProperty("short_name")
+        private String shortName;
     }
 
     @XmlElement(name = "type")
     @JsonProperty
     private List<String> types;
-
-    @XmlElement(name = "short_name")
-    @JsonProperty("short_name")
-    private String shortName;
-
-    @XmlElement(name = "long_name")
-    @JsonProperty("long_name")
-    private String longName;
 
     @XmlElement(name = "address_component")
     @JsonProperty("address_components")

@@ -1,6 +1,8 @@
 package com.amigood.parkspot.service;
 
+import com.amigood.domain.Protocol;
 import com.amigood.park.LocationController;
+import com.amigood.park.google.GeoResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
+
+import static junit.framework.Assert.assertEquals;
 
 /**
  * User: leo@amigood.com | Leo Amigood
@@ -33,6 +37,8 @@ public class LocationControllerTest {
         requestMock = new MockHttpServletRequest();
         responseMock = new MockHttpServletResponse();
         handlerAdapter = new AnnotationMethodHandlerAdapter();
+
+        controller.setProtocol(Protocol.JSON);
     }
 
     @Test
@@ -41,6 +47,11 @@ public class LocationControllerTest {
         requestMock.setRequestURI("/location/40.607234,-73.983338");
 
         ModelAndView model = handlerAdapter.handle(requestMock, responseMock, controller);
+        assertEquals(model.getModel().get(LocationController.RESPONSE).getClass(), GeoResponse.class);
+
+        GeoResponse response = (GeoResponse) model.getModel().get(LocationController.RESPONSE);
+        assertEquals(response.getStatus(), "OK");
+        assertEquals(response.getComponents().size(), 8);
     }
 
 }

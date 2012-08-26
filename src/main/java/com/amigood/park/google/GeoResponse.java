@@ -2,6 +2,8 @@ package com.amigood.park.google;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
  * Time: 3:18 PM
  */
 @XmlRootElement(name = "GeocodeResponse")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class GeoResponse {
 
     @JsonProperty
@@ -21,4 +24,20 @@ public class GeoResponse {
     @JsonProperty("results")
     @XmlElement(name = "result")
     private List<AddressComponent> components;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<AddressComponent> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<AddressComponent> components) {
+        this.components = components;
+    }
 }

@@ -18,18 +18,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LocationController {
+    public static final String RESPONSE = "response";
 
     @Autowired
     private LocationManager manager;
+
+    private Protocol protocol;
 
     // Using regexp matching as setting useDefaultSuffixPattern to false
     // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
     @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     public String getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
 
-        GeoResponse response = manager.geoCode(new Coordinates(latitude, longitude), Protocol.XML);
-        model.addAttribute("response", response);
+        GeoResponse response = manager.geoCode(new Coordinates(latitude, longitude), protocol);
+        model.addAttribute(RESPONSE, response);
         return "location";
+    }
+
+    public Protocol getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(Protocol protocol) {
+        this.protocol = protocol;
     }
 
 }
