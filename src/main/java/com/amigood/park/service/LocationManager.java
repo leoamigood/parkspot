@@ -1,8 +1,8 @@
 package com.amigood.park.service;
 
 import com.amigood.domain.Coordinates;
+import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
-import com.amigood.park.google.GeoResponse;
 
 /**
  * @author leo@amigood.com | Leo Amigood, Chain Tale LLC
@@ -11,5 +11,5 @@ import com.amigood.park.google.GeoResponse;
  */
 public interface LocationManager {
 
-    public GeoResponse geoCode(Coordinates coordinates, Protocol protocol);
+    public LocationAddress findLocation(Coordinates coordinates, Protocol protocol);
 }

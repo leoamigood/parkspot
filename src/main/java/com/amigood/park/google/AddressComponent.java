@@ -13,8 +13,11 @@ import java.util.List;
  */
 public class AddressComponent {
 
-    public static class Entry {
+    public static final String STREET_ADDRESS = "street_address";
+    public static final String STREET_NUMBER = "street_number";
+    public static final String ROUTE = "route";
 
+    public static class Entry {
         @JsonCreator
         public Entry() {}
 
@@ -29,6 +32,30 @@ public class AddressComponent {
         @XmlElement(name = "short_name")
         @JsonProperty("short_name")
         private String shortName;
+
+        public List<String> getTypes() {
+            return types;
+        }
+
+        public void setTypes(List<String> types) {
+            this.types = types;
+        }
+
+        public String getLongName() {
+            return longName;
+        }
+
+        public void setLongName(String longName) {
+            this.longName = longName;
+        }
+
+        public String getShortName() {
+            return shortName;
+        }
+
+        public void setShortName(String shortName) {
+            this.shortName = shortName;
+        }
     }
 
     @XmlElement(name = "type")
@@ -46,5 +73,17 @@ public class AddressComponent {
     @XmlElement
     @JsonProperty("geometry")
     private Geometry geometry;
+
+    public List<Entry> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(List<Entry> entries) {
+        this.entries = entries;
+    }
+
+    public List<String> getTypes() {
+        return types;
+    }
 
 }

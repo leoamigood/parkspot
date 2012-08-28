@@ -1,8 +1,8 @@
 package com.amigood.parkspot.service;
 
+import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
 import com.amigood.park.LocationController;
-import com.amigood.park.google.GeoResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,11 +47,11 @@ public class LocationControllerTest {
         requestMock.setRequestURI("/location/40.607234,-73.983338");
 
         ModelAndView model = handlerAdapter.handle(requestMock, responseMock, controller);
-        assertEquals(model.getModel().get(LocationController.RESPONSE).getClass(), GeoResponse.class);
+        assertEquals(model.getModel().get(LocationController.RESPONSE).getClass(), LocationAddress.class);
 
-        GeoResponse response = (GeoResponse) model.getModel().get(LocationController.RESPONSE);
-        assertEquals(response.getStatus(), "OK");
-        assertEquals(response.getComponents().size(), 8);
+        LocationAddress address = (LocationAddress) model.getModel().get(LocationController.RESPONSE);
+        assertEquals(address.getNumber(), "1613");
+        assertEquals(address.getStreet(), "W 10th St");
     }
 
 }
