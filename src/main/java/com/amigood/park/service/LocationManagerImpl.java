@@ -36,11 +36,16 @@ public class LocationManagerImpl implements LocationManager {
                 if (componentType.equals(AddressComponent.STREET_ADDRESS)) {
                     for (AddressComponent.Entry entry: component.getEntries()) {
                         for (String entryType: entry.getTypes()) {
-                            if (entryType.equals(AddressComponent.STREET_NUMBER)) {
+                            if (entryType.equals(AddressComponent.Element.STREET_NUMBER.toString())) {
                                 address.setNumber(entry.getShortName());
-                            }
-                            if (entryType.equals(AddressComponent.ROUTE)) {
+                            } else if (entryType.equals(AddressComponent.Element.STREET_NAME.toString())) {
                                 address.setStreet(entry.getShortName());
+                            } else if (entryType.equals(AddressComponent.Element.CITY.toString())) {
+                                address.setCity(entry.getShortName());
+                            } else if (entryType.equals(AddressComponent.Element.STATE.toString())) {
+                                address.setState(entry.getShortName());
+                            } else if (entryType.equals(AddressComponent.Element.COUNTRY.toString())) {
+                                address.setCountry(entry.getShortName());
                             }
                         }
                     }

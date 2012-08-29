@@ -69,6 +69,9 @@ public class LocationControllerTest {
         LocationAddress address = (LocationAddress) model.getModel().get(LocationController.RESPONSE);
         assertEquals("130", address.getNumber());
         assertEquals("Avenue P", address.getStreet());
+        assertEquals("Brooklyn", address.getCity());
+        assertEquals("NY", address.getState());
+        assertEquals("US", address.getCountry());
     }
 
 }

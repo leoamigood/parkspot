@@ -14,8 +14,25 @@ import java.util.List;
 public class AddressComponent {
 
     public static final String STREET_ADDRESS = "street_address";
-    public static final String STREET_NUMBER = "street_number";
-    public static final String ROUTE = "route";
+
+    public enum Element {
+        STREET_NUMBER("street_number"),
+        STREET_NAME("route"),
+        CITY("sublocality"),
+        STATE("administrative_area_level_1"),
+        COUNTRY("country");
+
+        private String value;
+
+        Element(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
 
     public static class Entry {
         @JsonCreator
