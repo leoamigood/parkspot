@@ -12,4 +12,5 @@ import com.amigood.domain.Protocol;
 public interface LocationManager {
 
     public LocationAddress findLocation(Coordinates coordinates, Protocol protocol);
+
 }

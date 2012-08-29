@@ -3,7 +3,7 @@ package com.amigood.park;
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
-import com.amigood.park.service.LocationManager;
+import com.amigood.park.service.LocationManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class LocationController {
     public static final String RESPONSE = "response";
 
     @Autowired
-    private LocationManager manager;
+    private LocationManagerImpl manager;
 
     private Protocol protocol;
 
@@ -33,6 +33,14 @@ public class LocationController {
         LocationAddress address = manager.findLocation(new Coordinates(latitude, longitude), protocol);
         model.addAttribute(RESPONSE, address);
         return "location";
+    }
+
+    public LocationManagerImpl getManager() {
+        return manager;
+    }
+
+    public void setManager(LocationManagerImpl manager) {
+        this.manager = manager;
     }
 
     public Protocol getProtocol() {

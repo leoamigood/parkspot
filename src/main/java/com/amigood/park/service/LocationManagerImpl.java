@@ -16,16 +16,15 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class LocationManagerImpl implements LocationManager {
+    private String api = "http://maps.googleapis.com/maps/api";
 
     @Autowired
-    private RestTemplate rest;
-
-    private String api = "http://maps.googleapis.com/maps/api";
+    private RestTemplate template;
 
     public LocationAddress findLocation(Coordinates coordinates, Protocol protocol) {
         String url = String.format("%s/geocode/%s?latlng=%s&sensor=false", api, protocol, coordinates);
 
-        GeoResponse geo = rest.getForEntity(url, GeoResponse.class).getBody();
+        GeoResponse geo = getTemplate().getForEntity(url, GeoResponse.class).getBody();
         return this.getAddress(geo);
     }
 
@@ -51,4 +50,13 @@ public class LocationManagerImpl implements LocationManager {
 
         return address;
     }
+
+    public RestTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(RestTemplate template) {
+        this.template = template;
+    }
+
 }
