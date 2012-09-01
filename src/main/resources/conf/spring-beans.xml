@@ -41,6 +41,16 @@
                 </bean>
             </list>
         </property>
+        <property name="ignoreAcceptHeader" value="true" />
+    </bean>
+
+    <!--Dispatches requests mapped to POJO @Controllers implementations-->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+            </list>
+        </property>
     </bean>
 
     <context:component-scan base-package="com.amigood"/>

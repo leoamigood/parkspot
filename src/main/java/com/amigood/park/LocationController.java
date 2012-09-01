@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * User: leo@amigood.com | Leo Amigood
@@ -18,21 +19,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LocationController {
-    public static final String RESPONSE = "response";
 
     @Autowired
     private LocationManagerImpl manager;
 
-    private Protocol protocol;
+    private Protocol protocol = Protocol.JSON;
 
     // Using regexp matching as setting useDefaultSuffixPattern to false
     // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
     @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
-    public String getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
+    @ResponseBody
+    public LocationAddress getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
 
         LocationAddress address = manager.findLocation(new Coordinates(latitude, longitude), protocol);
-        model.addAttribute(RESPONSE, address);
-        return "location";
+        return address;
     }
 
     public LocationManagerImpl getManager() {

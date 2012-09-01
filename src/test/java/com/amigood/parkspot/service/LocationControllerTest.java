@@ -19,7 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,6 +35,8 @@ public class LocationControllerTest {
 
     MockHttpServletRequest requestMock;
     MockHttpServletResponse responseMock;
+
+    @Autowired
     AnnotationMethodHandlerAdapter handlerAdapter;
 
     RestTemplate templateMock;
@@ -45,7 +48,6 @@ public class LocationControllerTest {
     public void setUp() {
         requestMock = new MockHttpServletRequest();
         responseMock = new MockHttpServletResponse();
-        handlerAdapter = new AnnotationMethodHandlerAdapter();
 
         templateMock = mock(RestTemplate.class);
         controller.getManager().setTemplate(templateMock);
@@ -60,17 +62,18 @@ public class LocationControllerTest {
 
         ResponseEntity entity = mock(ResponseEntity.class);
         when(templateMock.getForEntity("http://maps.googleapis.com/maps/api/geocode/json?latlng=40.607649,-73.983339&sensor=false", GeoResponse.class)).thenReturn(entity);
-        GeoResponse response = (new ObjectMapper()).readValue(new ClassPathResource("location.json").getFile(), GeoResponse.class);
+        GeoResponse response = new ObjectMapper().readValue(new ClassPathResource("location.json").getFile(), GeoResponse.class);
         when(entity.getBody()).thenReturn(response);
 
         ModelAndView model = handlerAdapter.handle(requestMock, responseMock, controller);
-        assertEquals(model.getModel().get(LocationController.RESPONSE).getClass(), LocationAddress.class);
+        assertNull(model);
 
-        LocationAddress address = (LocationAddress) model.getModel().get(LocationController.RESPONSE);
+        LocationAddress address = new ObjectMapper().readValue(responseMock.getContentAsString(), LocationAddress.class);
         assertEquals("130", address.getNumber());
         assertEquals("Avenue P", address.getStreet());
         assertEquals("Brooklyn", address.getCity());
         assertEquals("NY", address.getState());
+        assertEquals("11223", address.getZip());
         assertEquals("US", address.getCountry());
     }
 

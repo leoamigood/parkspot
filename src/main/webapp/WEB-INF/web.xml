@@ -4,7 +4,7 @@
     <display-name>Parking Spot Web Application</display-name>
 
     <servlet>
-        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-name>park</servlet-name>
         <servlet-class>
             org.springframework.web.servlet.DispatcherServlet
         </servlet-class>
@@ -12,7 +12,7 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-name>park</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 

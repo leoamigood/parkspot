@@ -20,7 +20,8 @@ public class AddressComponent {
         STREET_NAME("route"),
         CITY("sublocality"),
         STATE("administrative_area_level_1"),
-        COUNTRY("country");
+        COUNTRY("country"),
+        ZIP("postal_code");
 
         private String value;
 

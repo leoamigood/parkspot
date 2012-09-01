@@ -46,6 +46,8 @@ public class LocationManagerImpl implements LocationManager {
                                 address.setState(entry.getShortName());
                             } else if (entryType.equals(AddressComponent.Element.COUNTRY.toString())) {
                                 address.setCountry(entry.getShortName());
+                            } else if (entryType.equals(AddressComponent.Element.ZIP.toString())) {
+                                address.setZip(entry.getShortName());
                             }
                         }
                     }
