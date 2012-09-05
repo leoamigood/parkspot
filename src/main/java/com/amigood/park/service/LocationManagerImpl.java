@@ -21,7 +21,9 @@ public class LocationManagerImpl implements LocationManager {
     @Autowired
     private RestTemplate template;
 
-    public LocationAddress findLocation(Coordinates coordinates, Protocol protocol) {
+    private Protocol protocol = Protocol.JSON;
+
+    public LocationAddress findLocation(Coordinates coordinates) {
         String url = String.format("%s/geocode/%s?latlng=%s&sensor=false", api, protocol, coordinates);
 
         GeoResponse geo = getTemplate().getForEntity(url, GeoResponse.class).getBody();
@@ -66,4 +68,11 @@ public class LocationManagerImpl implements LocationManager {
         this.template = template;
     }
 
+    public Protocol getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(Protocol protocol) {
+        this.protocol = protocol;
+    }
 }

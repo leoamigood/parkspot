@@ -2,7 +2,6 @@ package com.amigood.park;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
-import com.amigood.domain.Protocol;
 import com.amigood.park.service.LocationManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,15 +22,13 @@ public class LocationController {
     @Autowired
     private LocationManagerImpl manager;
 
-    private Protocol protocol = Protocol.JSON;
-
     // Using regexp matching as setting useDefaultSuffixPattern to false
     // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
     @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     @ResponseBody
     public LocationAddress getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
 
-        LocationAddress address = manager.findLocation(new Coordinates(latitude, longitude), protocol);
+        LocationAddress address = manager.findLocation(new Coordinates(latitude, longitude));
         return address;
     }
 
@@ -41,14 +38,6 @@ public class LocationController {
 
     public void setManager(LocationManagerImpl manager) {
         this.manager = manager;
-    }
-
-    public Protocol getProtocol() {
-        return protocol;
-    }
-
-    public void setProtocol(Protocol protocol) {
-        this.protocol = protocol;
     }
 
 }

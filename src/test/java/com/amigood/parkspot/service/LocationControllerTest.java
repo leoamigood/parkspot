@@ -1,7 +1,6 @@
 package com.amigood.parkspot.service;
 
 import com.amigood.domain.LocationAddress;
-import com.amigood.domain.Protocol;
 import com.amigood.park.LocationController;
 import com.amigood.park.google.GeoResponse;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -56,12 +55,10 @@ public class LocationControllerTest {
     @Test
     public void testGetAddress() throws Exception {
         requestMock.setMethod("GET");
-        requestMock.setRequestURI("/location/40.607649,-73.983339");
-
-        controller.setProtocol(Protocol.JSON);
+        requestMock.setRequestURI("/location/40.605791,-73.982711");
 
         ResponseEntity entity = mock(ResponseEntity.class);
-        when(templateMock.getForEntity("http://maps.googleapis.com/maps/api/geocode/json?latlng=40.607649,-73.983339&sensor=false", GeoResponse.class)).thenReturn(entity);
+        when(templateMock.getForEntity("http://maps.googleapis.com/maps/api/geocode/json?latlng=40.605791,-73.982711&sensor=false", GeoResponse.class)).thenReturn(entity);
         GeoResponse response = new ObjectMapper().readValue(new ClassPathResource("location.json").getFile(), GeoResponse.class);
         when(entity.getBody()).thenReturn(response);
 
