@@ -13,7 +13,7 @@ CREATE TABLE `location` (
   KEY `sign_number_idx` (`sign_number`),
   KEY `from_street_idx` (`from_street`),
   KEY `to_street_idx` (`to_street`)
-) ENGINE=InnoDB AUTO_INCREMENT=94632 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* signs table contains signs details */
 CREATE TABLE `signs` (
@@ -26,5 +26,6 @@ CREATE TABLE `signs` (
   `arrow` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `sign_unique` (`borough`,`sign_number`,`sequence`),
-  KEY `sign_number_idx` (`sign_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=754333 DEFAULT CHARSET=utf8;
+  KEY `sign_number_idx` (`sign_number`),
+  KEY `description_idx` (`description`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
