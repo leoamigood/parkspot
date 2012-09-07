@@ -93,6 +93,12 @@ public class ParkingSign implements Serializable {
     @Column
     private String description;
 
+    @Column
+    private Long distance;
+
+    @Column
+    private String direction;
+
     public Integer getOrder() {
         return order;
     }
@@ -107,6 +113,22 @@ public class ParkingSign implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
 }

@@ -96,8 +96,8 @@ public class Location implements Serializable {
     @Column(name = "to_street")
     private String toStreet;
 
-    @Column(name = "orientation")
-    private Character orientation;
+    @Column
+    private String orientation;
 
     public String getSign() {
         return sign;
@@ -131,11 +131,12 @@ public class Location implements Serializable {
         this.toStreet = toStreet;
     }
 
-    public Character getOrientation() {
+    public String getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(Character orientation) {
+    public void setOrientation(String orientation) {
         this.orientation = orientation;
     }
+
 }

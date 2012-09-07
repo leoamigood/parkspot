@@ -1,3 +1,9 @@
+/* For all import data do the following steps:
+1. Replace multiple spaces with one
+2. Trim empty spaces at the end of lines
+3. Replace empty columns with NULL
+*/
+
 /* location table contains signs and streets with cross streets */
 CREATE TABLE `location` (
   `borough` varchar(1) NOT NULL DEFAULT '',
@@ -24,5 +30,6 @@ CREATE TABLE `signs` (
   PRIMARY KEY (`borough`,`sign_number`,`order`),
   KEY `sign_number_idx` (`sign_number`),
   KEY `description_idx` (`description`),
-  CONSTRAINT `signs_ibfk_1` FOREIGN KEY (`borough`, `sign_number`) REFERENCES `location` (`borough`, `sign_number`)
+  KEY `sign_number` (`sign_number`,`borough`),
+  CONSTRAINT `signs_ibfk_1` FOREIGN KEY (`sign_number`, `borough`) REFERENCES `location` (`sign_number`, `borough`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

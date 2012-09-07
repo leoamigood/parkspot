@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 /**
  * @author leo@amigood.com | Leo Amigood, Chain Tale LLC
@@ -32,10 +33,17 @@ public class HibernateConfigTest {
         Location location = (Location) query.uniqueResult();
 
         assertEquals("P-004958", location.getSign());
+        assertEquals("RANDALL AVENUE", location.getMainStreet());
+        assertEquals("FAILE STREET", location.getFromStreet());
+        assertEquals("COSTER STREET", location.getToStreet());
+        assertEquals("N", location.getOrientation());
+
         assertEquals(8, location.getSigns().size());
 
         ParkingSign sign = location.getSigns().get(3);
-        assertEquals("1 HOUR PARKING 9AM-7PM EXCEPT SUNDAY ", sign.getDescription());
+        assertEquals("1 HOUR PARKING 9AM-7PM EXCEPT SUNDAY", sign.getDescription());
+        assertEquals(30, sign.getDistance().intValue());
+        assertNull(sign.getDirection());
 
         session.close();
     }
