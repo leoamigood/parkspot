@@ -1,14 +1,12 @@
 /* location table contains signs and streets with cross streets */
 CREATE TABLE `location` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `borough` varchar(1) NOT NULL DEFAULT '',
   `sign_number` varchar(8) NOT NULL DEFAULT '',
   `main_street` varchar(255) NOT NULL DEFAULT '',
   `from_street` varchar(255) NOT NULL DEFAULT '',
   `to_street` varchar(255) NOT NULL DEFAULT '',
   `orientation` varchar(1) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `sign_unique` (`borough`,`sign_number`),
+  PRIMARY KEY (`borough`,`sign_number`),
   KEY `main_street_idx` (`main_street`),
   KEY `sign_number_idx` (`sign_number`),
   KEY `from_street_idx` (`from_street`),
@@ -17,15 +15,14 @@ CREATE TABLE `location` (
 
 /* signs table contains signs details */
 CREATE TABLE `signs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `borough` varchar(1) NOT NULL DEFAULT '',
   `sign_number` varchar(8) NOT NULL DEFAULT '',
-  `sequence` int(11) NOT NULL,
+  `order` int(4) NOT NULL,
   `distance` int(11) NOT NULL,
   `description` varchar(255) NOT NULL DEFAULT '',
-  `arrow` varchar(3) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `sign_unique` (`borough`,`sign_number`,`sequence`),
+  `direction` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`borough`,`sign_number`,`order`),
   KEY `sign_number_idx` (`sign_number`),
-  KEY `description_idx` (`description`)
+  KEY `description_idx` (`description`),
+  CONSTRAINT `signs_ibfk_1` FOREIGN KEY (`borough`, `sign_number`) REFERENCES `location` (`borough`, `sign_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
