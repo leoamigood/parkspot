@@ -15,7 +15,7 @@ import java.util.List;
  */
 @XmlRootElement(name = "GeocodeResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeoResponse {
+public class GoogleGeoResponse {
 
     @JsonProperty
     @XmlElement

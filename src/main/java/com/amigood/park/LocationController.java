@@ -2,7 +2,7 @@ package com.amigood.park;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
-import com.amigood.park.service.LocationManagerImpl;
+import com.amigood.park.service.GoogleLocationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LocationController {
 
     @Autowired
-    private LocationManagerImpl manager;
+    private GoogleLocationManager manager;
 
     // Using regexp matching as setting useDefaultSuffixPattern to false
     // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
@@ -32,11 +32,11 @@ public class LocationController {
         return address;
     }
 
-    public LocationManagerImpl getManager() {
+    public GoogleLocationManager getManager() {
         return manager;
     }
 
-    public void setManager(LocationManagerImpl manager) {
+    public void setManager(GoogleLocationManager manager) {
         this.manager = manager;
     }
 

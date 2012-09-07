@@ -4,7 +4,7 @@ import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
 import com.amigood.park.google.AddressComponent;
-import com.amigood.park.google.GeoResponse;
+import com.amigood.park.google.GoogleGeoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
  *         Time: 4:38 PM
  */
 @Service
-public class LocationManagerImpl implements LocationManager {
+public class GoogleLocationManager implements LocationManager {
     private String api = "http://maps.googleapis.com/maps/api";
 
     @Autowired
@@ -26,11 +26,11 @@ public class LocationManagerImpl implements LocationManager {
     public LocationAddress findLocation(Coordinates coordinates) {
         String url = String.format("%s/geocode/%s?latlng=%s&sensor=false", api, protocol, coordinates);
 
-        GeoResponse geo = getTemplate().getForEntity(url, GeoResponse.class).getBody();
+        GoogleGeoResponse geo = getTemplate().getForEntity(url, GoogleGeoResponse.class).getBody();
         return this.getAddress(geo);
     }
 
-    private LocationAddress getAddress(GeoResponse response) {
+    private LocationAddress getAddress(GoogleGeoResponse response) {
         LocationAddress address = new LocationAddress();
 
         for (AddressComponent component: response.getComponents()) {
