@@ -19,17 +19,17 @@ public class GoogleGeoResponse {
 
     @JsonProperty
     @XmlElement
-    private String status;
+    private GoogleResponseStatus status;
 
     @JsonProperty("results")
     @XmlElement(name = "result")
     private List<AddressComponent> components;
 
-    public String getStatus() {
+    public GoogleResponseStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(GoogleResponseStatus status) {
         this.status = status;
     }
 

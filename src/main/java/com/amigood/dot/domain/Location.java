@@ -1,5 +1,8 @@
 package com.amigood.dot.domain;
 
+import com.amigood.domain.LocationAddress;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -10,8 +13,23 @@ import java.util.List;
  *         Time: 11:45 AM
  */
 @Entity
+@DynamicUpdate
 @Table(name="location")
 public class Location implements Serializable {
+
+    public enum Borough {
+        B ("Bronx"),
+        K ("Brooklyn"),
+        S ("Staten Island"),
+        M ("Manhattan"),
+        Q ("Queens");
+
+        private String name;
+
+        Borough(String borough) {
+            this.name = borough;
+        }
+    }
 
     @EmbeddedId
     private LocationPk id;
@@ -31,7 +49,7 @@ public class Location implements Serializable {
     @Embeddable
     static public class LocationPk implements Serializable {
         @Column
-        private Character borough;
+        private String borough;
 
         @Column(name = "sign_number")
         private String sign;
@@ -39,16 +57,16 @@ public class Location implements Serializable {
         public LocationPk() {
         }
 
-        public LocationPk(Character borough, String sign) {
+        public LocationPk(String borough, String sign) {
             this.borough = borough;
             this.sign = sign;
         }
 
-        public Character getBorough() {
+        public String getBorough() {
             return borough;
         }
 
-        public void setBorough(Character borough) {
+        public void setBorough(String borough) {
             this.borough = borough;
         }
 
@@ -82,7 +100,7 @@ public class Location implements Serializable {
     }
 
     @Column(insertable=false, updatable=false)
-    private Character borough;
+    private Borough borough;
 
     @Column(name = "sign_number", insertable=false, updatable=false)
     private String sign;
@@ -98,6 +116,26 @@ public class Location implements Serializable {
 
     @Column
     private String orientation;
+
+    @Column(name = "from_lat")
+    private Double fromLat;
+
+    @Column(name = "from_lng")
+    private Double fromLng;
+
+    @Column(name = "to_lat")
+    private Double toLat;
+
+    @Column(name = "to_lng")
+    private Double toLng;
+
+    public Borough getBorough() {
+        return borough;
+    }
+
+    public void setBorough(Borough borough) {
+        this.borough = borough;
+    }
 
     public String getSign() {
         return sign;
@@ -139,4 +177,55 @@ public class Location implements Serializable {
         this.orientation = orientation;
     }
 
+    public Double getFromLat() {
+        return fromLat;
+    }
+
+    public void setFromLat(Double fromLat) {
+        this.fromLat = fromLat;
+    }
+
+    public Double getFromLng() {
+        return fromLng;
+    }
+
+    public void setFromLng(Double fromLng) {
+        this.fromLng = fromLng;
+    }
+
+    public Double getToLat() {
+        return toLat;
+    }
+
+    public void setToLat(Double toLat) {
+        this.toLat = toLat;
+    }
+
+    public Double getToLng() {
+        return toLng;
+    }
+
+    public void setToLng(Double toLng) {
+        this.toLng = toLng;
+    }
+
+    public LocationAddress getAddress(String street) {
+        LocationAddress address = new LocationAddress();
+        address.setStreet(street);
+        address.setCity(borough.name);
+        address.setState("NY");
+
+        return address;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "borough=" + borough +
+                ", sign='" + sign + '\'' +
+                ", mainStreet='" + mainStreet + '\'' +
+                ", fromStreet='" + fromStreet + '\'' +
+                ", toStreet='" + toStreet + '\'' +
+                '}';
+    }
 }

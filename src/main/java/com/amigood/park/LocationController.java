@@ -1,6 +1,5 @@
 package com.amigood.park;
 
-import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.park.service.GoogleLocationManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,7 @@ public class LocationController {
     @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     @ResponseBody
     public LocationAddress getAddress(@PathVariable String latitude, @PathVariable String longitude, Model model) {
-
-        LocationAddress address = manager.findLocation(new Coordinates(latitude, longitude));
-        return address;
+        return null;
     }
 
     public GoogleLocationManager getManager() {

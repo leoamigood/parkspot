@@ -1,5 +1,7 @@
 package com.amigood.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author leo@amigood.com | Leo Amigood, Chain Tale LLC
  *         Date: 8/28/12
@@ -12,6 +14,7 @@ public class LocationAddress {
     private String city;
     private String state;
     private String zip;
+    private String country;
 
     public String getNumber() {
         return number;
@@ -61,6 +64,29 @@ public class LocationAddress {
         this.country = country;
     }
 
-    private String country;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
+        if (StringUtils.isNotBlank(number)) {
+            sb.append(number);
+        }
+        if (StringUtils.isNotBlank(street)) {
+            sb.append(" ").append(street);
+        }
+        if (StringUtils.isNotBlank(city)) {
+            sb.append(",").append(city);
+        }
+        if (StringUtils.isNotBlank(state)) {
+            sb.append(",").append(state);
+        }
+        if (StringUtils.isNotBlank(zip)) {
+            sb.append(zip);
+        }
+        if (StringUtils.isNotBlank(country)) {
+            sb.append(",").append(country);
+        }
+
+        return sb.toString();
+    }
 }

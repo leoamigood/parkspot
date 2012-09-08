@@ -1,5 +1,6 @@
 package com.amigood.park.google;
 
+import com.amigood.domain.Coordinates;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -20,11 +21,15 @@ public class Geometry {
 
         @XmlElement
         @JsonProperty
-        private String lat;
+        public String lat;
 
         @XmlElement
         @JsonProperty
-        private String lng;
+        public  String lng;
+    }
+
+    public Coordinates getCoordinates() {
+        return new Coordinates(location.lat, location.lng);
     }
 
     @XmlElement

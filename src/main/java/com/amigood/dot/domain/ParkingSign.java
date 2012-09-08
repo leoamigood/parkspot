@@ -17,7 +17,7 @@ public class ParkingSign implements Serializable {
 
     static public class ParkingSignPk implements Serializable {
         @Column
-        private Character borough;
+        private String borough;
 
         @Column(name = "sign_number")
         private String sign;
@@ -28,17 +28,17 @@ public class ParkingSign implements Serializable {
         public ParkingSignPk() {
         }
 
-        public ParkingSignPk(Character borough, String sign, Integer order) {
+        public ParkingSignPk(String borough, String sign, Integer order) {
             this.borough = borough;
             this.sign = sign;
             this.order = order;
         }
 
-        public Character getBorough() {
+        public String getBorough() {
             return borough;
         }
 
-        public void setBorough(Character borough) {
+        public void setBorough(String borough) {
             this.borough = borough;
         }
 
@@ -65,7 +65,7 @@ public class ParkingSign implements Serializable {
 
             ParkingSignPk that = (ParkingSignPk) o;
 
-            if (borough != null ? !borough.equals(that.borough) : that.borough != null) return false;
+            if (borough != that.borough) return false;
             if (order != null ? !order.equals(that.order) : that.order != null) return false;
             if (sign != null ? !sign.equals(that.sign) : that.sign != null) return false;
 

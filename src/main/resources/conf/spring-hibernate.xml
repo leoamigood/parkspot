@@ -24,8 +24,9 @@
         </property>
         <property name="hibernateProperties">
             <value>
-                hibernate.format_sql=true
-                hibernate.show_sql=false
+                hibernate.format_sql = true
+                hibernate.show_sql = false
+                hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             </value>
         </property>
     </bean>

@@ -92,6 +92,18 @@ public class AddressComponent {
     @JsonProperty("geometry")
     private Geometry geometry;
 
+    @XmlElement(name = "partial_match")
+    @JsonProperty("partial_match")
+    private Boolean partialMatch;
+
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
+    }
+
     public List<Entry> getEntries() {
         return entries;
     }
@@ -104,4 +116,14 @@ public class AddressComponent {
         return types;
     }
 
+    @Override
+    public String toString() {
+        return "AddressComponent{" +
+                "types=" + types +
+                ", entries=" + entries +
+                ", address='" + address + '\'' +
+                ", geometry=" + geometry +
+                ", partialMatch=" + partialMatch +
+                '}';
+    }
 }
