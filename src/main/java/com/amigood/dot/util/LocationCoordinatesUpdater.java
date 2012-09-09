@@ -53,28 +53,20 @@ public class LocationCoordinatesUpdater {
                 LocationAddress toAddress = location.getAddress(location.getToStreet());
 
                 components = manager.findIntersection(mainAddress, fromAddress);
-                if (components.size() > 1) {
-                    logger.error("More than one intersections found for: {}", location);
-                } else if (components.size() == 0) {
-                    logger.error("NO intersections found for: {}", location);
+                if (components.size() != 1) {
+                    logger.error("Can't determine intersection for: {} and {}", mainAddress, fromAddress);
+                    continue;
                 }
-
-                for (AddressComponent component: components) {
-                    location.setFromLat(Double.parseDouble(component.getGeometry().getCoordinates().getLatitude()));
-                    location.setFromLng(Double.parseDouble(component.getGeometry().getCoordinates().getLongitude()));
-                }
+                AddressComponent from = components.get(0);
 
                 components = manager.findIntersection(mainAddress, toAddress);
-                if (components.size() > 1) {
-                    logger.error("More than one intersections found for: {}", location);
-                } else if (components.size() == 0) {
-                    logger.error("NO intersections found for: {}", location);
+                if (components.size() != 1) {
+                    logger.error("Can't determine intersection for: {} and {}", mainAddress, toAddress);
+                    continue;
                 }
+                AddressComponent to = components.get(0);
 
-                for (AddressComponent component: components) {
-                    location.setToLat(Double.parseDouble(component.getGeometry().getCoordinates().getLatitude()));
-                    location.setToLng(Double.parseDouble(component.getGeometry().getCoordinates().getLongitude()));
-                }
+                location.setCoordinates(from.getGeometry().getCoordinates(), to.getGeometry().getCoordinates());
 
                 if ( ++i % 100 == 0 ) {
                     session.flush();

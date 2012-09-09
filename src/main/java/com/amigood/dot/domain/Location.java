@@ -1,5 +1,6 @@
 package com.amigood.dot.domain;
 
+import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -175,6 +176,13 @@ public class Location implements Serializable {
 
     public void setOrientation(String orientation) {
         this.orientation = orientation;
+    }
+
+    public void setCoordinates(Coordinates from, Coordinates to) {
+        this.fromLat = Double.parseDouble(from.getLatitude());
+        this.fromLng = Double.parseDouble(from.getLongitude());
+        this.toLat = Double.parseDouble(to.getLatitude());
+        this.toLng = Double.parseDouble(to.getLongitude());
     }
 
     public Double getFromLat() {
