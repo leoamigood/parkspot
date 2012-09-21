@@ -1,16 +1,17 @@
 package com.amigood.park.service;
 
+import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
-import com.amigood.park.google.AddressComponent;
+import com.amigood.park.exception.IntersectionException;
+import com.amigood.park.exception.LocationException;
 import com.amigood.park.google.GoogleGeoResponse;
 import com.amigood.park.google.GoogleResponseStatus;
-import com.amigood.park.google.exception.GoogleException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 /**
  * @author leo@amigood.com | Leo Amigood, Chain Tale LLC
@@ -19,6 +20,8 @@ import java.util.List;
  */
 @Service
 public class GoogleLocationManager implements LocationManager {
+    private static final Logger logger = LoggerFactory.getLogger(GoogleLocationManager.class);
+
     private String api = "http://maps.googleapis.com/maps/api";
 
     @Autowired
@@ -26,15 +29,19 @@ public class GoogleLocationManager implements LocationManager {
 
     private Protocol protocol = Protocol.JSON;
 
-    public List<AddressComponent> findIntersection(LocationAddress address1, LocationAddress address2) throws GoogleException {
+    public Coordinates findIntersection(LocationAddress address1, LocationAddress address2) throws LocationException {
         String url = String.format("%s/geocode/%s?address=%s+and+%s&sensor=false", api, protocol, address1, address2);
 
-        GoogleGeoResponse geo = getTemplate().getForEntity(url, GoogleGeoResponse.class).getBody();
+        GoogleGeoResponse geo = template.getForEntity(url, GoogleGeoResponse.class).getBody();
         if (geo.getStatus() != GoogleResponseStatus.OK) {
-            throw new GoogleException(GoogleResponseStatus.OVER_QUERY_LIMIT);
+            throw new LocationException(geo.getStatus().toString());
         }
 
-        return geo.getComponents();
+        if (geo.getComponents().size() != 1) {
+            throw new IntersectionException(address1 + " & " + address2);
+        }
+
+        return geo.getComponents().get(0).getGeometry().getCoordinates();
     }
 
     public RestTemplate getTemplate() {

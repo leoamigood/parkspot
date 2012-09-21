@@ -32,6 +32,17 @@ public class Location implements Serializable {
         }
     }
 
+    public enum Source {
+        G ("Google"),
+        Y ("Yahoo");
+
+        private String name;
+
+        Source(String source) {
+            this.name = source;
+        }
+    }
+
     @EmbeddedId
     private LocationPk id;
 
@@ -129,6 +140,28 @@ public class Location implements Serializable {
 
     @Column(name = "to_lng")
     private Double toLng;
+
+    @Column(name = "source")
+    private Source source;
+
+    @Column(name = "zip")
+    private String zip;
+
+    public Source getSource() {
+        return source;
+    }
+
+    public void setSource(Source source) {
+        this.source = source;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
 
     public Borough getBorough() {
         return borough;

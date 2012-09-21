@@ -1,9 +1,10 @@
 package com.amigood.dot.util;
 
+import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.dot.domain.Location;
-import com.amigood.park.google.AddressComponent;
-import com.amigood.park.google.exception.GoogleException;
+import com.amigood.park.exception.IntersectionException;
+import com.amigood.park.exception.LocationException;
 import com.amigood.park.service.GoogleLocationManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -46,35 +47,27 @@ public class LocationCoordinatesUpdater {
             Query query = session.createQuery("from Location l where l.fromLat is NULL or l.toLat is NULL or l.fromLng is NULL or l.toLng is NULL");
             List<Location> locations = query.list();
 
-            List<AddressComponent> components = null;
             for (Location location: locations) {
                 LocationAddress mainAddress = location.getAddress(location.getMainStreet());
                 LocationAddress fromAddress = location.getAddress(location.getFromStreet());
                 LocationAddress toAddress = location.getAddress(location.getToStreet());
 
-                components = manager.findIntersection(mainAddress, fromAddress);
-                if (components.size() != 1) {
-                    logger.error("Can't determine intersection for: {} and {}", mainAddress, fromAddress);
-                    continue;
-                }
-                AddressComponent from = components.get(0);
+                try {
+                    Coordinates from = manager.findIntersection(mainAddress, fromAddress);
+                    Coordinates to = manager.findIntersection(mainAddress, toAddress);
 
-                components = manager.findIntersection(mainAddress, toAddress);
-                if (components.size() != 1) {
-                    logger.error("Can't determine intersection for: {} and {}", mainAddress, toAddress);
-                    continue;
+                    location.setCoordinates(from, to);
+                } catch (IntersectionException ie) {
+                    logger.error("Cannot determine location for: " + ie.getMessage());
+                    location.setCoordinates(new Coordinates("0","0"), new Coordinates("0","0"));
                 }
-                AddressComponent to = components.get(0);
-
-                location.setCoordinates(from.getGeometry().getCoordinates(), to.getGeometry().getCoordinates());
 
                 if ( ++i % 100 == 0 ) {
                     session.flush();
-                    session.clear();
-                    System.out.print(i + " rows updated.\r");
                 }
+                System.out.print(i + " rows processed.\r");
             }
-        } catch (GoogleException e) {
+        } catch (LocationException e) {
             logger.error(e.getMessage());
         } finally {
             session.flush();

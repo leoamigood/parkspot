@@ -7,6 +7,6 @@ package com.amigood.park.service;
  */
 public interface LocationManager {
 
-    //public LocationAddress findLocation(Coordinates coordinates);
+    //public Coordinates findIntersection(LocationAddress address1, LocationAddress address2) throws LocationException;
 
 }
