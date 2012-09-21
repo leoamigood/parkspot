@@ -2,7 +2,6 @@ package com.amigood.dot.domain;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +13,6 @@ import java.util.List;
  *         Time: 11:45 AM
  */
 @Entity
-@DynamicUpdate
 @Table(name="location")
 public class Location implements Serializable {
 
@@ -29,17 +27,6 @@ public class Location implements Serializable {
 
         Borough(String borough) {
             this.name = borough;
-        }
-    }
-
-    public enum Source {
-        G ("Google"),
-        Y ("Yahoo");
-
-        private String name;
-
-        Source(String source) {
-            this.name = source;
         }
     }
 
@@ -140,28 +127,6 @@ public class Location implements Serializable {
 
     @Column(name = "to_lng")
     private Double toLng;
-
-    @Column(name = "source")
-    private Source source;
-
-    @Column(name = "zip")
-    private String zip;
-
-    public Source getSource() {
-        return source;
-    }
-
-    public void setSource(Source source) {
-        this.source = source;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
 
     public Borough getBorough() {
         return borough;
