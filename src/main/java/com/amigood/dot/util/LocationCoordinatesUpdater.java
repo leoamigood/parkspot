@@ -44,7 +44,7 @@ public class LocationCoordinatesUpdater {
         int i = 0;
         Session session = sessionFactory.openSession();
         try {
-            Query query = session.createQuery("from Location l where l.fromLat is NULL or l.toLat is NULL or l.fromLng is NULL or l.toLng is NULL");
+            Query query = session.createQuery("from Location l where l.validated = FALSE");
             List<Location> locations = query.list();
 
             for (Location location: locations) {
@@ -57,9 +57,12 @@ public class LocationCoordinatesUpdater {
                     Coordinates to = manager.findIntersection(mainAddress, toAddress);
 
                     location.setCoordinates(from, to);
+                    location.setCenterLat((from.getLatitude() + to.getLatitude()) / 2);
+                    location.setCenterLng((from.getLongitude() + to.getLongitude()) / 2);
+                    location.setValidated(true);
                 } catch (IntersectionException ie) {
                     logger.error("Cannot determine location for: " + ie.getMessage());
-                    location.setCoordinates(new Coordinates("0","0"), new Coordinates("0","0"));
+                    location.setValidated(true);
                 }
 
                 if ( ++i % 100 == 0 ) {

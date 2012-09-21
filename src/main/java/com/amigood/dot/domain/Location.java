@@ -14,10 +14,10 @@ import java.util.List;
  */
 
 @NamedQueries({
-        @NamedQuery(
-                name = "findNearestStreet",
-                query = "FROM Location l WHERE l.fromLng > 0 and l.fromLat < 0 and l.toLng > 0 and l.toLat < 0 " +
-                        "ORDER BY ABS(2.0 * :fromLat - l.offLat) + abs(2.0 * :fromLng - l.offLng) ASC"
+    @NamedQuery(
+        name = "findNearestStreet",
+        query = "FROM Location l WHERE fromLat is not null AND fromLng is not null AND toLat is not null AND toLng is not null  " +
+                "ORDER BY abs(:fromLat - l.centerLat) + abs(:fromLng - l.centerLng) ASC"
         )
 })
 
@@ -137,11 +137,22 @@ public class Location implements Serializable {
     @Column(name = "to_lng")
     private Double toLng;
 
-    @Column(name = "offset_lat")
-    private Double offLat;
+    @Column(name = "center_lat")
+    private Double centerLat;
 
-    @Column(name = "offset_lng")
-    private Double offLng;
+    @Column(name = "center_lng")
+    private Double centerLng;
+
+    @Column
+    private Boolean validated;
+
+    public Boolean getValidated() {
+        return validated;
+    }
+
+    public void setValidated(Boolean validated) {
+        this.validated = validated;
+    }
 
     public Borough getBorough() {
         return borough;
@@ -228,6 +239,22 @@ public class Location implements Serializable {
 
     public void setToLng(Double toLng) {
         this.toLng = toLng;
+    }
+
+    public Double getCenterLat() {
+        return centerLat;
+    }
+
+    public void setCenterLat(Double centerLat) {
+        this.centerLat = centerLat;
+    }
+
+    public Double getCenterLng() {
+        return centerLng;
+    }
+
+    public void setCenterLng(Double centerLng) {
+        this.centerLng = centerLng;
     }
 
     public LocationAddress getAddress(String street) {
