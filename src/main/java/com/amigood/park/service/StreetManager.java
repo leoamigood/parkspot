@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface StreetManager {
 
-    public List<Location> getLocations(Coordinates coordinates);
+    public List<Location> getLocations(Coordinates coordinates, Integer total);
 
 }

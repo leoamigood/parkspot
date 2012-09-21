@@ -29,7 +29,7 @@ public class LocationController {
     @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     @ResponseBody
     public List<Location> getLocations(@PathVariable String latitude, @PathVariable String longitude, Model model) {
-        return manager.getLocations(new Coordinates(latitude, longitude));
+        return manager.getLocations(new Coordinates(latitude, longitude), 10);
     }
 
     public StreetManagerImpl getManager() {

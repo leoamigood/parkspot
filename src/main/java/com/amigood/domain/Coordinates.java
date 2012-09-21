@@ -15,30 +15,34 @@ public class Coordinates {
         return String.format("%s,%s", longitude, latitude);
     }
 
-    private String longitude;
-    private String latitude;
+    private Double longitude;
+    private Double latitude;
 
     public Coordinates() {
     }
 
     public Coordinates(String longitude, String latitude) {
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.longitude = Double.parseDouble(longitude);
+        this.latitude = Double.parseDouble(latitude);
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public Double[] getAsArray() {
+        return new Double[]{latitude, longitude};
     }
 }

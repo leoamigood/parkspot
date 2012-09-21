@@ -25,8 +25,9 @@ public class DotDAOImplTest {
 
     @Test
     public void testGetLocations() throws Exception {
-        List<Location> locations = dao.getLocations(new Coordinates("40.655891", "-73.93064"));
+        List<Location> locations = dao.getLocations(new Coordinates("40.655891", "-73.93064"), 10);
 
-        Assert.assertEquals(30593, locations.size());
+        Assert.assertEquals(10, locations.size());
+        Assert.assertEquals("P-219746", locations.get(0).getSign());
     }
 }

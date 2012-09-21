@@ -1,7 +1,6 @@
 package com.amigood.park.dao;
 
 import com.amigood.domain.Coordinates;
-import com.amigood.dot.domain.Location;
 
 import java.util.List;
 
@@ -12,6 +11,6 @@ import java.util.List;
  */
 public interface DotDAO {
 
-    public List<Location> getLocations(Coordinates coordinates);
+    public List getLocations(Coordinates coordinates, Integer limit);
 
 }

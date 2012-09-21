@@ -23,9 +23,11 @@ public class DotDAOImpl extends HibernateTemplate implements DotDAO {
     }
 
     @Override
-    public List<Location> getLocations(Coordinates coordinates) {
-        return find("from Location l where l.fromLng > 0 and l.fromLat < 0 and l.toLng > 0 and l.toLat < 0");
-    }
+    public List<Location> getLocations(Coordinates coordinates, Integer limit) {
+        String[] params = new String[] {"fromLat", "fromLng"};
+        setMaxResults(limit);
 
+        return findByNamedQueryAndNamedParam("findNearestStreet", params, coordinates.getAsArray());
+    }
 
 }

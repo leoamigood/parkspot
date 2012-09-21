@@ -20,7 +20,7 @@ public class StreetManagerImpl implements StreetManager {
     private DotDAO dao;
 
     @Override
-    public List<Location> getLocations(Coordinates coordinates) {
-        return dao.getLocations(coordinates);
+    public List<Location> getLocations(Coordinates coordinates, Integer total) {
+        return dao.getLocations(coordinates, total);
     }
 }

@@ -1,16 +1,11 @@
 package com.amigood.park.service;
 
-import com.amigood.domain.LocationAddress;
 import com.amigood.park.LocationController;
-import com.amigood.park.google.GoogleGeoResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,10 +14,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
 
+import java.util.List;
+import java.util.Map;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * User: leo@amigood.com | Leo Amigood
@@ -50,30 +47,19 @@ public class LocationControllerTest {
         responseMock = new MockHttpServletResponse();
 
         templateMock = mock(RestTemplate.class);
-//        controller.getManager().setTemplate(templateMock);
     }
 
     @Test
-    @Ignore
-    public void testGetAddress() throws Exception {
+    public void testGetLocations() throws Exception {
         requestMock.setMethod("GET");
-        requestMock.setRequestURI("/location/40.605791,-73.982711");
-
-        ResponseEntity entity = mock(ResponseEntity.class);
-        when(templateMock.getForEntity("http://maps.googleapis.com/maps/api/geocode/json?latlng=40.605791,-73.982711&sensor=false", GoogleGeoResponse.class)).thenReturn(entity);
-        GoogleGeoResponse response = new ObjectMapper().readValue(new ClassPathResource("google/location.json").getFile(), GoogleGeoResponse.class);
-        when(entity.getBody()).thenReturn(response);
+        requestMock.setRequestURI("/location/40.60281,-73.996821");
 
         ModelAndView model = handlerAdapter.handle(requestMock, responseMock, controller);
         assertNull(model);
 
-        LocationAddress address = new ObjectMapper().readValue(responseMock.getContentAsString(), LocationAddress.class);
-        assertEquals("130", address.getNumber());
-        assertEquals("Avenue P", address.getStreet());
-        assertEquals("Brooklyn", address.getCity());
-        assertEquals("NY", address.getState());
-        assertEquals("11223", address.getZip());
-        assertEquals("US", address.getCountry());
+        List<Map> locations = new ObjectMapper().readValue(responseMock.getContentAsString(), List.class);
+        assertEquals("P-227058", locations.get(0).get("sign"));
+        assertEquals("P-227060", locations.get(1).get("sign"));
     }
 
 }

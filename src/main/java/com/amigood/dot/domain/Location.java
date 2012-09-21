@@ -12,6 +12,15 @@ import java.util.List;
  *         Date: 9/7/12
  *         Time: 11:45 AM
  */
+
+@NamedQueries({
+        @NamedQuery(
+                name = "findNearestStreet",
+                query = "FROM Location l WHERE l.fromLng > 0 and l.fromLat < 0 and l.toLng > 0 and l.toLat < 0 " +
+                        "ORDER BY ABS(2.0 * :fromLat - l.offLat) + abs(2.0 * :fromLng - l.offLng) ASC"
+        )
+})
+
 @Entity
 @Table(name="location")
 public class Location implements Serializable {
@@ -33,7 +42,7 @@ public class Location implements Serializable {
     @EmbeddedId
     private LocationPk id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumns({@JoinColumn(name = "borough"), @JoinColumn(name = "sign_number")})
     private List<ParkingSign> signs;
 
@@ -128,6 +137,12 @@ public class Location implements Serializable {
     @Column(name = "to_lng")
     private Double toLng;
 
+    @Column(name = "offset_lat")
+    private Double offLat;
+
+    @Column(name = "offset_lng")
+    private Double offLng;
+
     public Borough getBorough() {
         return borough;
     }
@@ -177,10 +192,10 @@ public class Location implements Serializable {
     }
 
     public void setCoordinates(Coordinates from, Coordinates to) {
-        this.fromLat = Double.parseDouble(from.getLatitude());
-        this.fromLng = Double.parseDouble(from.getLongitude());
-        this.toLat = Double.parseDouble(to.getLatitude());
-        this.toLng = Double.parseDouble(to.getLongitude());
+        this.fromLat = from.getLatitude();
+        this.fromLng = from.getLongitude();
+        this.toLat = to.getLatitude();
+        this.toLng = to.getLongitude();
     }
 
     public Double getFromLat() {
