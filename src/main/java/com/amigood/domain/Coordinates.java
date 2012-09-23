@@ -21,9 +21,9 @@ public class Coordinates {
     public Coordinates() {
     }
 
-    public Coordinates(String longitude, String latitude) {
-        this.longitude = Double.parseDouble(longitude);
+    public Coordinates(String latitude, String longitude) {
         this.latitude = Double.parseDouble(latitude);
+        this.longitude = Double.parseDouble(longitude);
     }
 
     public Double getLongitude() {

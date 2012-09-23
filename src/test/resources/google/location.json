@@ -3,126 +3,10 @@
       {
          "address_components" : [
             {
-               "long_name" : "130",
-               "short_name" : "130",
-               "types" : [ "street_number" ]
-            },
-            {
-               "long_name" : "Avenue P",
-               "short_name" : "Avenue P",
+               "long_name" : "New Utrecht Ave",
+               "short_name" : "New Utrecht Ave",
                "types" : [ "route" ]
             },
-            {
-               "long_name" : "Gravesend",
-               "short_name" : "Gravesend",
-               "types" : [ "neighborhood", "political" ]
-            },
-            {
-               "long_name" : "Brooklyn",
-               "short_name" : "Brooklyn",
-               "types" : [ "sublocality", "political" ]
-            },
-            {
-               "long_name" : "Kings",
-               "short_name" : "Kings",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "New York",
-               "short_name" : "NY",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            },
-            {
-               "long_name" : "11223",
-               "short_name" : "11223",
-               "types" : [ "postal_code" ]
-            }
-         ],
-         "formatted_address" : "130 Avenue P, Brooklyn, NY 11223, USA",
-         "geometry" : {
-            "location" : {
-               "lat" : 40.6074560,
-               "lng" : -73.98296490
-            },
-            "location_type" : "ROOFTOP",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 40.60880498029150,
-                  "lng" : -73.98161591970849
-               },
-               "southwest" : {
-                  "lat" : 40.60610701970850,
-                  "lng" : -73.98431388029151
-               }
-            }
-         },
-         "types" : [ "street_address" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "11223",
-               "short_name" : "11223",
-               "types" : [ "postal_code" ]
-            },
-            {
-               "long_name" : "Brooklyn",
-               "short_name" : "Brooklyn",
-               "types" : [ "sublocality", "political" ]
-            },
-            {
-               "long_name" : "Kings",
-               "short_name" : "Kings",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "New York",
-               "short_name" : "NY",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Brooklyn, NY 11223, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 40.6099860,
-                  "lng" : -73.95899790
-               },
-               "southwest" : {
-                  "lat" : 40.5825840,
-                  "lng" : -73.98725499999999
-               }
-            },
-            "location" : {
-               "lat" : 40.60092330,
-               "lng" : -73.9771260
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 40.6099860,
-                  "lng" : -73.95899790
-               },
-               "southwest" : {
-                  "lat" : 40.5825840,
-                  "lng" : -73.98725499999999
-               }
-            }
-         },
-         "types" : [ "postal_code" ]
-      },
-      {
-         "address_components" : [
             {
                "long_name" : "Bensonhurst",
                "short_name" : "Bensonhurst",
@@ -152,277 +36,32 @@
                "long_name" : "United States",
                "short_name" : "US",
                "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "11219",
+               "short_name" : "11219",
+               "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "Bensonhurst, Brooklyn, NY, USA",
+         "formatted_address" : "New Utrecht Ave & 67th St, Brooklyn, NY 11219, USA",
          "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 40.6242990,
-                  "lng" : -73.97294190
-               },
-               "southwest" : {
-                  "lat" : 40.6017860,
-                  "lng" : -74.01160519999999
-               }
-            },
             "location" : {
-               "lat" : 40.61126910,
-               "lng" : -73.99769460
+               "lat" : 40.62164890,
+               "lng" : -73.99832060
             },
             "location_type" : "APPROXIMATE",
             "viewport" : {
                "northeast" : {
-                  "lat" : 40.6242990,
-                  "lng" : -73.97294190
+                  "lat" : 40.62299788029149,
+                  "lng" : -73.99697161970849
                },
                "southwest" : {
-                  "lat" : 40.6017860,
-                  "lng" : -74.01160519999999
+                  "lat" : 40.62029991970849,
+                  "lng" : -73.99966958029151
                }
             }
          },
-         "types" : [ "neighborhood", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "Kings",
-               "short_name" : "Kings",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "New York",
-               "short_name" : "NY",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Kings, NY, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 40.7394460,
-                  "lng" : -73.83336509999999
-               },
-               "southwest" : {
-                  "lat" : 40.57047330,
-                  "lng" : -74.04200489999999
-               }
-            },
-            "location" : {
-               "lat" : 40.65287620,
-               "lng" : -73.95949399999999
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 40.7394460,
-                  "lng" : -73.83336509999999
-               },
-               "southwest" : {
-                  "lat" : 40.57047330,
-                  "lng" : -74.04200489999999
-               }
-            }
-         },
-         "types" : [ "administrative_area_level_2", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "Brooklyn",
-               "short_name" : "Brooklyn",
-               "types" : [ "sublocality", "political" ]
-            },
-            {
-               "long_name" : "New York",
-               "short_name" : "New York",
-               "types" : [ "locality", "political" ]
-            },
-            {
-               "long_name" : "Kings",
-               "short_name" : "Kings",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "New York",
-               "short_name" : "NY",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Brooklyn, NY, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 40.7394460,
-                  "lng" : -73.83336509999999
-               },
-               "southwest" : {
-                  "lat" : 40.5510420,
-                  "lng" : -74.056630
-               }
-            },
-            "location" : {
-               "lat" : 40.650,
-               "lng" : -73.950
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 40.7394460,
-                  "lng" : -73.83336509999999
-               },
-               "southwest" : {
-                  "lat" : 40.5510420,
-                  "lng" : -74.056630
-               }
-            }
-         },
-         "types" : [ "sublocality", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "New York",
-               "short_name" : "New York",
-               "types" : [ "locality", "political" ]
-            },
-            {
-               "long_name" : "New York",
-               "short_name" : "New York",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "New York",
-               "short_name" : "NY",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "New York, NY, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 40.91524140,
-                  "lng" : -73.70027209999999
-               },
-               "southwest" : {
-                  "lat" : 40.4959080,
-                  "lng" : -74.25908790
-               }
-            },
-            "location" : {
-               "lat" : 40.71435280,
-               "lng" : -74.00597309999999
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 40.91524140,
-                  "lng" : -73.70027209999999
-               },
-               "southwest" : {
-                  "lat" : 40.49591430,
-                  "lng" : -74.25573489999999
-               }
-            }
-         },
-         "types" : [ "locality", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "New York",
-               "short_name" : "NY",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "New York, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 45.0158650,
-                  "lng" : -71.85626990
-               },
-               "southwest" : {
-                  "lat" : 40.49594540,
-                  "lng" : -79.76214379999999
-               }
-            },
-            "location" : {
-               "lat" : 43.29942850,
-               "lng" : -74.21793260000001
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 45.01261130,
-                  "lng" : -71.85631290000001
-               },
-               "southwest" : {
-                  "lat" : 40.4960060,
-                  "lng" : -79.76214379999999
-               }
-            }
-         },
-         "types" : [ "administrative_area_level_1", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "United States",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 71.3898880,
-                  "lng" : -66.94976079999999
-               },
-               "southwest" : {
-                  "lat" : 18.91106420,
-                  "lng" : 172.45469660
-               }
-            },
-            "location" : {
-               "lat" : 37.090240,
-               "lng" : -95.7128910
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 49.380,
-                  "lng" : -66.940
-               },
-               "southwest" : {
-                  "lat" : 25.820,
-                  "lng" : -124.390
-               }
-            }
-         },
-         "types" : [ "country", "political" ]
+         "types" : [ "intersection" ]
       }
    ],
    "status" : "OK"

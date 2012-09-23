@@ -40,4 +40,5 @@ public class GoogleGeoResponse {
     public void setComponents(List<AddressComponent> components) {
         this.components = components;
     }
+
 }

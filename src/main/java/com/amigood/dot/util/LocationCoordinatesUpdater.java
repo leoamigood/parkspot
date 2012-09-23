@@ -44,7 +44,7 @@ public class LocationCoordinatesUpdater {
         int i = 0;
         Session session = sessionFactory.openSession();
         try {
-            Query query = session.createQuery("from Location l where l.validated = FALSE");
+            Query query = session.createQuery("FROM Location l WHERE l.validated = false");
             List<Location> locations = query.list();
 
             for (Location location: locations) {
@@ -71,7 +71,7 @@ public class LocationCoordinatesUpdater {
                 System.out.print(i + " rows processed.\r");
             }
         } catch (LocationException e) {
-            logger.error(e.getMessage());
+            logger.error("Failed to update location coordinates!", e);
         } finally {
             session.flush();
             session.close();

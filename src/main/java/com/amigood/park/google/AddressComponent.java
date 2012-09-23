@@ -1,9 +1,18 @@
 package com.amigood.park.google;
 
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.DeserializationContext;
+import org.codehaus.jackson.map.JsonDeserializer;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlEnum;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,6 +20,7 @@ import java.util.List;
  * Date: 8/23/12
  * Time: 4:11 PM
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AddressComponent {
 
     public static final String STREET_ADDRESS = "street_address";
@@ -35,20 +45,41 @@ public class AddressComponent {
         }
     }
 
+    @XmlEnum
+    @JsonDeserialize(using = AddressComponent.Type.Deserializer.class)
+    public static enum Type {
+        //TODO: implement AddressComponent.isIntersection()
+        INTERSECTION,
+        ROUTE,
+        SUBWAY_STATION,
+        TRAIN_STATION,
+        TRANSIT_STATION,
+        ESTABLISHMENT;
+
+        public static class Deserializer extends JsonDeserializer<Type> {
+            @Override
+            public Type deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException, JsonProcessingException {
+                return Type.valueOf(jsonParser.getText().toUpperCase());
+            }
+        }
+
+    }
+
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Entry {
         @JsonCreator
         public Entry() {}
 
-        @XmlElement(name = "type")
         @JsonProperty
+        @XmlElement(name = "type")
         private List<String> types;
 
-        @XmlElement(name = "long_name")
         @JsonProperty("long_name")
+        @XmlElement(name = "long_name")
         private String longName;
 
-        @XmlElement(name = "short_name")
         @JsonProperty("short_name")
+        @XmlElement(name = "short_name")
         private String shortName;
 
         public List<String> getTypes() {
@@ -76,24 +107,24 @@ public class AddressComponent {
         }
     }
 
-    @XmlElement(name = "type")
     @JsonProperty
-    private List<String> types;
+    @XmlElement(name = "type")
+    private List<Type> types;
 
-    @XmlElement(name = "address_component")
     @JsonProperty("address_components")
+    @XmlElement(name = "address_component")
     private List<AddressComponent.Entry> entries;
 
-    @XmlElement(name = "formatted_address")
     @JsonProperty("formatted_address")
+    @XmlElement(name = "formatted_address")
     private String address;
 
+    @JsonProperty
     @XmlElement
-    @JsonProperty("geometry")
     private Geometry geometry;
 
-    @XmlElement(name = "partial_match")
     @JsonProperty("partial_match")
+    @XmlElement(name = "partial_match")
     private Boolean partialMatch;
 
     public Geometry getGeometry() {
@@ -112,14 +143,13 @@ public class AddressComponent {
         this.entries = entries;
     }
 
-    public List<String> getTypes() {
+    public List<Type> getTypes() {
         return types;
     }
 
     @Override
     public String toString() {
         return "AddressComponent{" +
-                "types=" + types +
                 ", entries=" + entries +
                 ", address='" + address + '\'' +
                 ", geometry=" + geometry +

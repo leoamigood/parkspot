@@ -69,10 +69,10 @@ public class LocationAddress {
         StringBuilder sb = new StringBuilder();
 
         if (StringUtils.isNotBlank(number)) {
-            sb.append(number);
+            sb.append(number).append(" ");
         }
         if (StringUtils.isNotBlank(street)) {
-            sb.append(" ").append(street);
+            sb.append(street);
         }
         if (StringUtils.isNotBlank(city)) {
             sb.append(",").append(city);
