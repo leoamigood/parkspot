@@ -6,7 +6,7 @@
 
 /* location table contains signs and streets with cross streets */
 CREATE TABLE `location` (
-  `borough` varchar(1) NOT NULL DEFAULT '',
+  `borough` enum('B','K','Q','M','S') NOT NULL DEFAULT 'B',
   `sign_number` varchar(8) NOT NULL DEFAULT '',
   `main_street` varchar(255) NOT NULL DEFAULT '',
   `from_street` varchar(255) NOT NULL DEFAULT '',
@@ -23,16 +23,12 @@ CREATE TABLE `location` (
   KEY `main_street_idx` (`main_street`),
   KEY `sign_number_idx` (`sign_number`),
   KEY `from_street_idx` (`from_street`),
-  KEY `to_street_idx` (`to_street`),
-  KEY `from_street_lat_idx` (`from_lat`),
-  KEY `from_street_lng_idx` (`from_lng`),
-  KEY `to_street_lat_idx` (`to_lat`),
-  KEY `to_street_lng_idx` (`to_lng`)
+  KEY `to_street_idx` (`to_street`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* signs table contains signs details */
 CREATE TABLE `signs` (
-  `borough` varchar(1) NOT NULL DEFAULT '',
+  `borough` enum('B','K','Q','M','S') NOT NULL DEFAULT 'B',
   `sign_number` varchar(8) NOT NULL DEFAULT '',
   `order` int(4) NOT NULL,
   `distance` int(11) NOT NULL,

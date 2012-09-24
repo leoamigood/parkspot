@@ -21,6 +21,18 @@ import java.util.List;
         )
 })
 
+/**
+ *  Additional location queries:
+ *  Get closest street based on coordinates, for example 40.673559, -73.970822
+ *  SELECT sign_number FROM location WHERE from_lat is not null AND from_lng is not null AND to_lat is not null AND to_lng is not null order by abs(40.673559 - center_lat) + abs(-73.970822 - center_lng)
+ *
+ *  Another way to find the closest street
+ *  SELECT sign_number FROM (SELECT sign_number, abs(40.673559 - center_lat) + abs(-73.970822 - center_lng) as deviation FROM location) as closest WHERE deviation > 0 ORDER BY deviation asc
+ *
+ *  Update center coordinates
+ *  UPDATE location SET center_lng = (from_lng + to_lng) / 2, center_lat = (from_lat + to_lat) / 2, validated = 1 WHERE from_lng < 0 and from_lat > 0 and to_lng < 0 and to_lat > 0
+ */
+
 @Entity
 @Table(name="location")
 public class Location implements Serializable {
