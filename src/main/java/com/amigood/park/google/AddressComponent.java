@@ -51,10 +51,22 @@ public class AddressComponent {
         //TODO: implement AddressComponent.isIntersection()
         INTERSECTION,
         ROUTE,
+        BUS_STATION,
         SUBWAY_STATION,
         TRAIN_STATION,
         TRANSIT_STATION,
-        ESTABLISHMENT;
+        ESTABLISHMENT,
+        POINT_OF_INTEREST,
+        STORE,
+        PHARMACY,
+        DOCTOR,
+        DENTIST,
+        HEALTH,
+        SUBLOCALITY,
+        POLITICAL,
+        ADMINISTRATIVE_AREA_LEVEL_2,
+        STREET_ADDRESS,
+        PARKING;
 
         public static class Deserializer extends JsonDeserializer<Type> {
             @Override

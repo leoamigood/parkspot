@@ -61,7 +61,7 @@ public class LocationCoordinatesUpdater {
                     location.setCenterLng((from.getLongitude() + to.getLongitude()) / 2);
                     location.setValidated(true);
                 } catch (IntersectionException ie) {
-                    logger.error("Cannot determine location for: " + ie.getMessage());
+                    logger.error("Cant find location for " + location.getSign() + ": " + ie.getMessage());
                     location.setValidated(true);
                 }
 

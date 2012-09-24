@@ -28,6 +28,13 @@ public class DotDAOImplTest {
         List<Location> locations = dao.getLocations(new Coordinates("40.655891", "-73.93064"), 10);
 
         Assert.assertEquals(10, locations.size());
-        Assert.assertEquals("P-219746", locations.get(0).getSign());
+
+        Location location = locations.get(0);
+        Assert.assertEquals("P-219746", location.getSign());
+        Assert.assertEquals("UTICA AVENUE", location.getMainStreet());
+        Assert.assertEquals("CLARKSON AVENUE", location.getFromStreet());
+        Assert.assertEquals("LENOX ROAD", location.getToStreet());
+        Assert.assertEquals("W", location.getOrientation());
+        Assert.assertEquals(Location.Borough.K, location.getBorough());
     }
 }
