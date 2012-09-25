@@ -66,6 +66,7 @@ public class AddressComponent {
         POLITICAL,
         ADMINISTRATIVE_AREA_LEVEL_2,
         STREET_ADDRESS,
+        PARK,
         PARKING;
 
         public static class Deserializer extends JsonDeserializer<Type> {

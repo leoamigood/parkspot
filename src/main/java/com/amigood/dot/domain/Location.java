@@ -16,15 +16,16 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(
         name = "findNearestStreet",
-        query = "FROM Location l WHERE fromLat is not null AND fromLng is not null AND toLat is not null AND toLng is not null  " +
-                "ORDER BY abs(:fromLat - l.centerLat) + abs(:fromLng - l.centerLng) ASC"
+        query = "FROM Location l WHERE fromLat is not null AND fromLng is not null " +
+                    "AND toLat is not null AND toLng is not null AND validated = 1 " +
+                    "ORDER BY abs(:fromLat - l.centerLat) + abs(:fromLng - l.centerLng) ASC"
         )
 })
 
 /**
  *  Additional location queries:
  *  Get closest street based on coordinates, for example 40.673559, -73.970822
- *  SELECT sign_number FROM location WHERE from_lat is not null AND from_lng is not null AND to_lat is not null AND to_lng is not null order by abs(40.673559 - center_lat) + abs(-73.970822 - center_lng)
+ *  SELECT sign_number FROM location WHERE from_lat is not null AND from_lng is not null AND to_lat is not null AND to_lng is not null AND validated = 1 order by abs(40.673559 - center_lat) + abs(-73.970822 - center_lng)
  *
  *  Another way to find the closest street
  *  SELECT sign_number FROM (SELECT sign_number, abs(40.673559 - center_lat) + abs(-73.970822 - center_lng) as deviation FROM location) as closest WHERE deviation > 0 ORDER BY deviation asc
@@ -54,7 +55,7 @@ public class Location implements Serializable {
     @EmbeddedId
     private LocationPk id;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @JoinColumns({@JoinColumn(name = "borough"), @JoinColumn(name = "sign_number")})
     private List<ParkingSign> signs;
 

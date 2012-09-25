@@ -65,7 +65,7 @@ public class ParkingSign implements Serializable {
 
             ParkingSignPk that = (ParkingSignPk) o;
 
-            if (borough != that.borough) return false;
+            if (borough != null ? !borough.equals(that.borough) : that.borough != null) return false;
             if (order != null ? !order.equals(that.order) : that.order != null) return false;
             if (sign != null ? !sign.equals(that.sign) : that.sign != null) return false;
 
@@ -82,10 +82,10 @@ public class ParkingSign implements Serializable {
     }
 
     @Column(insertable=false, updatable=false)
-    private Character borough;
+    private String borough;
 
     @Column(name="sign_number", insertable=false, updatable=false)
-    private String sign;
+    private String number;
 
     @Column(insertable=false, updatable=false)
     private Integer order;

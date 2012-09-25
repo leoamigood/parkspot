@@ -3,12 +3,17 @@ package com.amigood.dot.util;
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.dot.domain.Location;
+import com.amigood.dot.domain.ParkingSign;
 import com.amigood.park.exception.IntersectionException;
 import com.amigood.park.exception.LocationException;
 import com.amigood.park.service.GoogleLocationManager;
-import org.hibernate.Query;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +49,15 @@ public class LocationCoordinatesUpdater {
         int i = 0;
         Session session = sessionFactory.openSession();
         try {
-            Query query = session.createQuery("FROM Location l WHERE l.validated = false");
-            List<Location> locations = query.list();
+            Criteria criteria = session.createCriteria(Location.class)
+                                    .add(Restrictions.eq("validated", Boolean.FALSE))
+                                    .add(Property.forName("sign")
+                                            .in(DetachedCriteria.forClass(ParkingSign.class)
+                                                .setProjection(Projections.distinct(Projections.property("number")))
+                                            )
+                                    );
+
+            List<Location> locations = criteria.list();
 
             for (Location location: locations) {
                 LocationAddress mainAddress = location.getAddress(location.getMainStreet());
