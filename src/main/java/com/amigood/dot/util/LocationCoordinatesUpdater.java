@@ -71,6 +71,7 @@ public class LocationCoordinatesUpdater {
                     location.setCoordinates(from, to);
                     location.setCenterLat((from.getLatitude() + to.getLatitude()) / 2);
                     location.setCenterLng((from.getLongitude() + to.getLongitude()) / 2);
+                    location.setLength(Math.sqrt(Math.pow(from.getLatitude() - to.getLatitude(), 2) + Math.pow(from.getLongitude() - to.getLongitude(), 2)));
                     location.setValidated(true);
                 } catch (IntersectionException ie) {
                     logger.error("Cant find location for " + location.getSign() + ": " + ie.getMessage());

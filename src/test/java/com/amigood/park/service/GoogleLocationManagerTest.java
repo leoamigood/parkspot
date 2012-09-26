@@ -53,7 +53,7 @@ public class GoogleLocationManagerTest {
     @Test
     public void testFindIntersection() throws Exception {
         ResponseEntity entity = mock(ResponseEntity.class);
-        String url = "http://maps.googleapis.com/maps/api/geocode/json?address=NEW UTRECHT AVENUE,Brooklyn,NY+and+67 STREET,Brooklyn,NY&sensor=false";
+        String url = "http://maps.googleapis.com/maps/api/geocode/json?address=NEW UTRECHT AVENUE,Brooklyn,NY+and+67 STREET,Brooklyn,NY&components=intersection&sensor=false";
         when(templateMock.getForEntity(url, GoogleGeoResponse.class)).thenReturn(entity);
         GoogleGeoResponse response = new ObjectMapper().readValue(new ClassPathResource("google/location.json").getFile(), GoogleGeoResponse.class);
         when(entity.getBody()).thenReturn(response);

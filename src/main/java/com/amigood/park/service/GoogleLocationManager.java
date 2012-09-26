@@ -32,7 +32,7 @@ public class GoogleLocationManager implements LocationManager {
     private Protocol protocol = Protocol.JSON;
 
     public Coordinates findIntersection(LocationAddress address1, LocationAddress address2) throws LocationException {
-        String url = String.format("%s/geocode/%s?address=%s+and+%s&sensor=false", api, protocol, address1, address2);
+        String url = String.format("%s/geocode/%s?address=%s+and+%s&components=intersection&sensor=false", api, protocol, address1, address2);
 
         try {
             GoogleGeoResponse geo = template.getForEntity(url, GoogleGeoResponse.class).getBody();

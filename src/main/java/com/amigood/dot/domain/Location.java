@@ -19,7 +19,16 @@ import java.util.List;
         query = "FROM Location l WHERE fromLat is not null AND fromLng is not null " +
                     "AND toLat is not null AND toLng is not null AND validated = 1 " +
                     "ORDER BY abs(:fromLat - l.centerLat) + abs(:fromLng - l.centerLng) ASC"
-        )
+        ),
+
+        @NamedQuery(
+        name = "findClosestStreet",
+        query = "SELECT l.sign, l.centerLng, l.centerLat, l.length as a, " +
+                        "sqrt(pow(abs(:fromLng) - abs(l.fromLng), 2) + pow(abs(:fromLat) - abs(l.fromLat), 2)) as b, " +
+                        "sqrt(pow(abs(:fromLng) - abs(l.toLng), 2) + pow(abs(:fromLat) - abs(l.toLat), 2)) as c " +
+                    "FROM Location l WHERE l.fromLng < 0 and l.fromLat > 0 and l.toLng < 0 and l.toLat > 0 and validated = 1 " +
+                "ORDER BY abs(abs(:fromLng) - abs(l.centerLng)) + abs(abs(:fromLat) - abs(l.centerLat))"
+    )
 })
 
 /**
@@ -32,6 +41,13 @@ import java.util.List;
  *
  *  Update center coordinates
  *  UPDATE location SET center_lng = (from_lng + to_lng) / 2, center_lat = (from_lat + to_lat) / 2, validated = 1 WHERE from_lng < 0 and from_lat > 0 and to_lng < 0 and to_lat > 0
+ *
+ *  Update street distance
+ *  UPDATE location SET length = sqrt(pow(from_lng - to_lng, 2) + pow(from_lat - to_lat, 2))
+ *
+ *  279,000 is the length scaling constant in feet
+ *  For example, to calculate the length of "AVENUE Y" between "OCEAN AVENUE" and "EAST 19 STREET"
+ *  Use this formula (length * 279,000) = 0.0012012523631590181 * 279,000 =~ 335 feet
  */
 
 @Entity
@@ -157,15 +173,10 @@ public class Location implements Serializable {
     private Double centerLng;
 
     @Column
+    private Double length;
+
+    @Column
     private Boolean validated;
-
-    public Boolean getValidated() {
-        return validated;
-    }
-
-    public void setValidated(Boolean validated) {
-        this.validated = validated;
-    }
 
     public Borough getBorough() {
         return borough;
@@ -268,6 +279,22 @@ public class Location implements Serializable {
 
     public void setCenterLng(Double centerLng) {
         this.centerLng = centerLng;
+    }
+
+    public Double getLength() {
+        return length;
+    }
+
+    public void setLength(Double length) {
+        this.length = length;
+    }
+
+    public Boolean getValidated() {
+        return validated;
+    }
+
+    public void setValidated(Boolean validated) {
+        this.validated = validated;
     }
 
     public LocationAddress getAddress(String street) {
