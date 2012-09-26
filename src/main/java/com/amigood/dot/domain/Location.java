@@ -13,34 +13,8 @@ import java.util.List;
  *         Time: 11:45 AM
  */
 
-@NamedQueries({
-    @NamedQuery(
-        name = "findNearestStreet",
-        query = "FROM Location l WHERE fromLat is not null AND fromLng is not null " +
-                    "AND toLat is not null AND toLng is not null AND validated = 1 " +
-                    "ORDER BY abs(:fromLat - l.centerLat) + abs(:fromLng - l.centerLng) ASC"
-        ),
-
-        @NamedQuery(
-        name = "findClosestStreet",
-        query = "SELECT l.sign, l.centerLng, l.centerLat, l.length as a, " +
-                        "sqrt(pow(abs(:fromLng) - abs(l.fromLng), 2) + pow(abs(:fromLat) - abs(l.fromLat), 2)) as b, " +
-                        "sqrt(pow(abs(:fromLng) - abs(l.toLng), 2) + pow(abs(:fromLat) - abs(l.toLat), 2)) as c " +
-                    "FROM Location l WHERE l.fromLng < 0 and l.fromLat > 0 and l.toLng < 0 and l.toLat > 0 and validated = 1 " +
-                "ORDER BY abs(abs(:fromLng) - abs(l.centerLng)) + abs(abs(:fromLat) - abs(l.centerLat))"
-    )
-})
-
 /**
- *  Additional location queries:
- *  Get closest street based on coordinates, for example 40.673559, -73.970822
- *  SELECT sign_number FROM location WHERE from_lat is not null AND from_lng is not null AND to_lat is not null AND to_lng is not null AND validated = 1 order by abs(40.673559 - center_lat) + abs(-73.970822 - center_lng)
- *
- *  Another way to find the closest street
- *  SELECT sign_number FROM (SELECT sign_number, abs(40.673559 - center_lat) + abs(-73.970822 - center_lng) as deviation FROM location) as closest WHERE deviation > 0 ORDER BY deviation asc
- *
- *  Update center coordinates
- *  UPDATE location SET center_lng = (from_lng + to_lng) / 2, center_lat = (from_lat + to_lat) / 2, validated = 1 WHERE from_lng < 0 and from_lat > 0 and to_lng < 0 and to_lat > 0
+ *  Additional queries:
  *
  *  Update street distance
  *  UPDATE location SET length = sqrt(pow(from_lng - to_lng, 2) + pow(from_lat - to_lat, 2))

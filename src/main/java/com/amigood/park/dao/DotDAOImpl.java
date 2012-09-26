@@ -24,9 +24,6 @@ public class DotDAOImpl extends HibernateTemplate implements DotDAO {
     }
 
     public List<Location> getLocations(Coordinates coordinates, Integer limit) {
-        String[] params = new String[] {"fromLat", "fromLng"};
-        setMaxResults(limit);
-
         String sql = "SELECT * FROM (" +
                         "SELECT *, (a+b+c)/2 as p FROM (" +
                             "SELECT *, length as a, sqrt(pow(abs(:fromLng) - abs(from_lng), 2) + pow(abs(:fromLat) - abs(from_lat), 2)) as b, sqrt(pow(abs(:fromLng) - abs(to_lng), 2) + pow(abs(:fromLat) - abs(to_lat), 2)) as c from location " +
@@ -40,7 +37,6 @@ public class DotDAOImpl extends HibernateTemplate implements DotDAO {
         query.setInteger("limit", limit);
 
         return query.list();
-        //return findByNamedQueryAndNamedParam("findNearestStreet", params, coordinates.getAsArray());
     }
 
 }
