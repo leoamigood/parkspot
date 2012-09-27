@@ -64,9 +64,10 @@ public class LocationCoordinatesUpdater {
                 LocationAddress fromAddress = location.getAddress(location.getFromStreet());
                 LocationAddress toAddress = location.getAddress(location.getToStreet());
 
+                Coordinates from = null, to = null;
                 try {
-                    Coordinates from = manager.findIntersection(mainAddress, fromAddress);
-                    Coordinates to = manager.findIntersection(mainAddress, toAddress);
+                    from = manager.findIntersection(mainAddress, fromAddress);
+                    to = manager.findIntersection(mainAddress, toAddress);
 
                     location.setCoordinates(from, to);
                     location.setCenterLat((from.getLatitude() + to.getLatitude()) / 2);
@@ -75,6 +76,7 @@ public class LocationCoordinatesUpdater {
                     location.setValidated(true);
                 } catch (IntersectionException ie) {
                     logger.error("Cant find location for " + location.getSign() + ": " + ie.getMessage());
+                    location.setCoordinates(from, to);
                     location.setValidated(true);
                 }
 

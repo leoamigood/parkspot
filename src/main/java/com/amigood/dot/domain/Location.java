@@ -216,10 +216,14 @@ public class Location implements Serializable {
     }
 
     public void setCoordinates(Coordinates from, Coordinates to) {
-        this.fromLat = from.getLatitude();
-        this.fromLng = from.getLongitude();
-        this.toLat = to.getLatitude();
-        this.toLng = to.getLongitude();
+        if (from != null) {
+            this.fromLat = from.getLatitude();
+            this.fromLng = from.getLongitude();
+        }
+        if (to != null) {
+            this.toLat = to.getLatitude();
+            this.toLng = to.getLongitude();
+        }
     }
 
     public Double getFromLat() {
