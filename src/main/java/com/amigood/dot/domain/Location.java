@@ -29,7 +29,7 @@ import java.util.List;
  *  Additional queries:
  *
  *  Refresh street center coordinates
- *  UPDATE location SET center_lat = (from_lat + to_lat) / 2, center_lng = (from_lng + to_lng) / 2 where validated = 1;
+ *  UPDATE location SET center_lat = (from_lat + to_lat) / 2, center_lng = (from_lng + to_lng) / 2;
  *
  *  Refresh street distance
  *  UPDATE location SET length = sqrt(pow(from_lng - to_lng, 2) + pow(from_lat - to_lat, 2))

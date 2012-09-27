@@ -70,7 +70,8 @@ public class AddressComponent {
         PARK,
         PARKING,
         CHURCH,
-        PLACE_OF_WORSHIP;
+        PLACE_OF_WORSHIP,
+        MUSEUM;
 
         public static class Deserializer extends JsonDeserializer<Type> {
             @Override
