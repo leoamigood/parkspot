@@ -24,14 +24,7 @@ public class DotDAOImpl extends HibernateTemplate implements DotDAO {
     }
 
     public List<Location> getLocations(Coordinates coordinates, Integer limit) {
-        String sql = "SELECT * FROM (" +
-                        "SELECT *, (a+b+c)/2 as p FROM (" +
-                            "SELECT *, length as a, sqrt(pow(abs(:fromLng) - abs(from_lng), 2) + pow(abs(:fromLat) - abs(from_lat), 2)) as b, sqrt(pow(abs(:fromLng) - abs(to_lng), 2) + pow(abs(:fromLat) - abs(to_lat), 2)) as c from location " +
-                            "WHERE from_lng is not null AND from_lat is not null AND to_lng is not null AND to_lat is not null AND validated = 1) as triangle " +
-                            "ORDER BY abs(abs(:fromLng) - abs(center_lng)) + abs(abs(:fromLat) - abs(center_lat)) limit :limit) as nearby " +
-                        "ORDER BY 2/a * sqrt(p*(p-a)*(p-b)*(p-c)) asc";
-
-        Query query = getSession().createSQLQuery(sql).addEntity(Location.class);
+        Query query = getSession().getNamedQuery("findClosestStreet");
         query.setDouble("fromLat", coordinates.getLatitude());
         query.setDouble("fromLng", coordinates.getLongitude());
         query.setInteger("limit", limit);

@@ -13,14 +13,29 @@ import java.util.List;
  *         Time: 11:45 AM
  */
 
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "findClosestStreet",
+                query = "SELECT * FROM (" +
+                            "SELECT *, (a+b+c)/2 as p FROM (" +
+                                "SELECT *, length as a, sqrt(pow(abs(:fromLng) - abs(from_lng), 2) + pow(abs(:fromLat) - abs(from_lat), 2)) as b, sqrt(pow(abs(:fromLng) - abs(to_lng), 2) + pow(abs(:fromLat) - abs(to_lat), 2)) as c from location " +
+                                "WHERE from_lng is not null AND from_lat is not null AND to_lng is not null AND to_lat is not null AND validated = 1) as triangle " +
+                                "ORDER BY abs(abs(:fromLng) - abs(center_lng)) + abs(abs(:fromLat) - abs(center_lat)) limit :limit) as nearby " +
+                        "ORDER BY 2/a * sqrt(p*(p-a)*(p-b)*(p-c)) asc",
+                resultClass = Location.class
+        ),
+})
 /**
  *  Additional queries:
  *
- *  Update street distance
+ *  Refresh street center coordinates
+ *  UPDATE location SET center_lat = (from_lat + to_lat) / 2, center_lng = (from_lng + to_lng) / 2 where validated = 1;
+ *
+ *  Refresh street distance
  *  UPDATE location SET length = sqrt(pow(from_lng - to_lng, 2) + pow(from_lat - to_lat, 2))
  *
  *  279,000 is the length scaling constant in feet
- *  For example, to calculate the length of "AVENUE Y" between "OCEAN AVENUE" and "EAST 19 STREET"
+ *  For example, to calculate the length of "AVENUE Y" between "OCEAN AVENUE" and "EAST 19 STREET" in "BROOKLYN, NY"
  *  Use this formula (length * 279,000) = 0.0012012523631590181 * 279,000 =~ 335 feet
  */
 
