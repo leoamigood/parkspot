@@ -3,7 +3,6 @@ package com.amigood.park.service;
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
-import com.amigood.park.exception.IntersectionException;
 import com.amigood.park.exception.LocationException;
 import com.amigood.park.google.AddressComponent;
 import com.amigood.park.google.GoogleGeoResponse;
@@ -40,12 +39,12 @@ public class GoogleLocationManager implements LocationManager {
                 throw new LocationException(geo.getStatus().toString());
             }
 
-            if (geo.getComponents().size() != 1 ||
-                    !geo.getComponents().get(0).getTypes().contains(AddressComponent.Type.INTERSECTION)) {
-                throw new IntersectionException(address1 + " and " + address2);
+            if (geo.getComponents().size() == 1 &&
+                    geo.getComponents().get(0).getTypes().contains(AddressComponent.Type.INTERSECTION)) {
+                return geo.getComponents().get(0).getGeometry().getCoordinates();
+            } else {
+                return null;
             }
-
-            return geo.getComponents().get(0).getGeometry().getCoordinates();
         } catch (HttpMessageNotReadableException e) {
             throw new LocationException(address1 + " and " + address2, e.getCause());
         }

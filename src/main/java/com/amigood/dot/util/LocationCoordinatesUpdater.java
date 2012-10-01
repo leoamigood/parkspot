@@ -67,15 +67,23 @@ public class LocationCoordinatesUpdater {
                 Coordinates from = null, to = null;
                 try {
                     from = manager.findIntersection(mainAddress, fromAddress);
-                    to = manager.findIntersection(mainAddress, toAddress);
+                    if (from == null) {
+                        logger.error("Cant find location for " + location.getSign() + ": " + mainAddress + " and " + fromAddress);
+                    }
 
-                    location.setCoordinates(from, to);
-                    location.setCenterLat((from.getLatitude() + to.getLatitude()) / 2);
-                    location.setCenterLng((from.getLongitude() + to.getLongitude()) / 2);
-                    location.setLength(Math.sqrt(Math.pow(from.getLatitude() - to.getLatitude(), 2) + Math.pow(from.getLongitude() - to.getLongitude(), 2)));
-                    location.setValidated(true);
+                    to = manager.findIntersection(mainAddress, toAddress);
+                    if (to == null) {
+                        logger.error("Cant find location for " + location.getSign() + ": " + mainAddress + " and " + toAddress);
+                    }
+
+                    if (from != null && to != null) {
+                        location.setCenterLat((from.getLatitude() + to.getLatitude()) / 2);
+                        location.setCenterLng((from.getLongitude() + to.getLongitude()) / 2);
+                        location.setLength(Math.sqrt(Math.pow(from.getLatitude() - to.getLatitude(), 2) + Math.pow(from.getLongitude() - to.getLongitude(), 2)));
+                    }
                 } catch (IntersectionException ie) {
                     logger.error("Cant find location for " + location.getSign() + ": " + ie.getMessage());
+                } finally {
                     location.setCoordinates(from, to);
                     location.setValidated(true);
                 }

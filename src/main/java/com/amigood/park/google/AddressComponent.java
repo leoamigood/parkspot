@@ -62,6 +62,7 @@ public class AddressComponent {
         DOCTOR,
         DENTIST,
         HEALTH,
+        HOSPITAL,
         VETERINARY_CARE,
         SUBLOCALITY,
         POLITICAL,
@@ -70,8 +71,11 @@ public class AddressComponent {
         PARK,
         PARKING,
         CHURCH,
+        SYNAGOGUE,
         PLACE_OF_WORSHIP,
-        MUSEUM;
+        MUSEUM,
+        UNIVERSITY,
+        LIBRARY;
 
         public static class Deserializer extends JsonDeserializer<Type> {
             @Override

@@ -19,6 +19,7 @@ import java.util.List;
  * Time: 4:48 PM
  */
 @Controller
+//@RequestMapping("/location")
 public class LocationController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class LocationController {
 
     // Using regexp matching as setting useDefaultSuffixPattern to false
     // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
-    @RequestMapping(method= RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
+    @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     @ResponseBody
     public List<Location> getLocations(@PathVariable String latitude, @PathVariable String longitude, Model model) {
         return manager.getLocations(new Coordinates(latitude, longitude), 10);
