@@ -75,7 +75,8 @@ public class AddressComponent {
         PLACE_OF_WORSHIP,
         MUSEUM,
         UNIVERSITY,
-        LIBRARY;
+        LIBRARY,
+        POST_OFFICE;
 
         public static class Deserializer extends JsonDeserializer<Type> {
             @Override
