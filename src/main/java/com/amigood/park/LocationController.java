@@ -6,7 +6,6 @@ import com.amigood.park.service.StreetManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,15 +30,13 @@ public class LocationController {
     @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     @ResponseBody
     public List<Location> getLocations(@PathVariable String latitude, @PathVariable String longitude, Model model) {
-        return manager.getLocations(new Coordinates(latitude, longitude), 10);
+        return getLocationsLimited(latitude, longitude, 10, model);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/location/map")
-    public String getMap(ModelMap model) {
-        model.addAttribute("location", new Coordinates("40.60281", "-73.996821"));
-        model.addAttribute("apiKey", "AIzaSyBIAvKGXJFrMNoc2BbmT32PxTNh0_kDVFw");
-
-        return "map";
+    @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude}/{limit}"})
+    @ResponseBody
+    public List<Location> getLocationsLimited(@PathVariable String latitude, @PathVariable String longitude, @PathVariable Integer limit, Model model) {
+        return manager.getLocations(new Coordinates(latitude, longitude), limit);
     }
 
     public StreetManagerImpl getManager() {

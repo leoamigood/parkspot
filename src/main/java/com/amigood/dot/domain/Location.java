@@ -32,7 +32,7 @@ import java.util.List;
  *  UPDATE location SET center_lat = (from_lat + to_lat) / 2, center_lng = (from_lng + to_lng) / 2;
  *
  *  Refresh street distance
- *  UPDATE location SET length = sqrt(pow(from_lng - to_lng, 2) + pow(from_lat - to_lat, 2))
+ *  UPDATE location SET length = sqrt(pow(from_lng - to_lng, 2) + pow(from_lat - to_lat, 2));
  *
  *  279,000 is the length scaling constant in feet
  *  For example, to calculate the length of "AVENUE Y" between "OCEAN AVENUE" and "EAST 19 STREET" in "BROOKLYN, NY"
