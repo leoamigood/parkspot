@@ -10,6 +10,9 @@
     <bean id="dataSource" destroy-method="close" class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/dot"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="validationQuery" value="select 1"/>
+        <property name="validationInterval" value="30000"/>
         <property name="username" value="geo"/>
         <property name="password" value="geo"/>
     </bean>
