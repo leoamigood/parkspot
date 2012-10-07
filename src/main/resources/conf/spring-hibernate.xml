@@ -13,6 +13,12 @@
         <property name="testOnBorrow" value="true"/>
         <property name="validationQuery" value="select 1"/>
         <property name="validationInterval" value="30000"/>
+	<property name="maxActive" value="5" />
+	<property name="maxIdle" value="5" />
+	<property name="minIdle" value="3" />
+	<property name="maxWait" value="-1" />
+	<property name="removeAbandoned" value="true" />
+	<property name="removeAbandonedTimeout" value="5" />
         <property name="username" value="b16dec85fa0ea3"/>
         <property name="password" value="2b5322db"/>
     </bean>
