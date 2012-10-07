@@ -9,12 +9,12 @@
 
     <bean id="dataSource" destroy-method="close" class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/dot?autoReconnect=true"/>
+        <property name="url" value="jdbc:mysql://us-cdbr-east-02.cleardb.com/heroku_b5bf9ce4609dc85?reconnect=true"/>
         <property name="testOnBorrow" value="true"/>
         <property name="validationQuery" value="select 1"/>
         <property name="validationInterval" value="30000"/>
-        <property name="username" value="geo"/>
-        <property name="password" value="geo"/>
+        <property name="username" value="b16dec85fa0ea3"/>
+        <property name="password" value="2b5322db"/>
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
