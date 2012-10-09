@@ -16,7 +16,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -34,9 +33,6 @@ public class GoogleLocationManagerTest {
 
     MockHttpServletRequest requestMock;
     MockHttpServletResponse responseMock;
-
-    @Autowired
-    AnnotationMethodHandlerAdapter handlerAdapter;
 
     RestTemplate templateMock;
 

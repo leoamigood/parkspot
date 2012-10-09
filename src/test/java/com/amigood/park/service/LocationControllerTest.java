@@ -1,6 +1,5 @@
 package com.amigood.park.service;
 
-import com.amigood.park.LocationController;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +11,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.List;
 import java.util.Map;
@@ -35,12 +36,12 @@ public class LocationControllerTest {
     MockHttpServletResponse responseMock;
 
     @Autowired
-    AnnotationMethodHandlerAdapter handlerAdapter;
-
-    RestTemplate templateMock;
+    RequestMappingHandlerAdapter handlerAdapter;
 
     @Autowired
-    LocationController controller;
+    RequestMappingHandlerMapping handlerMapping;
+
+    RestTemplate templateMock;
 
     @Before
     public void setUp() {
@@ -54,14 +55,27 @@ public class LocationControllerTest {
     @Transactional
     public void testGetLocations() throws Exception {
         requestMock.setMethod("GET");
-        requestMock.setRequestURI("/location/40.60281,-73.996821");
+        requestMock.setRequestURI("/location/40.606614,-73.987471/");
+
+        Object controller = handlerMapping.getHandler(requestMock).getHandler();
+        final HandlerInterceptor[] interceptors = handlerMapping.getHandler(requestMock).getInterceptors();
+        for (HandlerInterceptor interceptor : interceptors) {
+            final boolean carryOn = interceptor.preHandle(requestMock, responseMock, controller);
+            if (!carryOn) {
+                return;
+            }
+        }
 
         ModelAndView model = handlerAdapter.handle(requestMock, responseMock, controller);
+
+        for (HandlerInterceptor interceptor : interceptors) {
+            interceptor.postHandle(requestMock, responseMock, controller, model);
+        }
+
         assertNull(model);
 
         List<Map> locations = new ObjectMapper().readValue(responseMock.getContentAsString(), List.class);
-        assertEquals("P-227058", locations.get(0).get("sign"));
-        assertEquals("P-227060", locations.get(1).get("sign"));
+        assertEquals("S-113531", locations.get(0).get("sign"));
     }
 
 }
