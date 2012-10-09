@@ -20,7 +20,7 @@ import static junit.framework.Assert.assertNull;
  *         Time: 11:37 AM
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/conf/spring-hibernate.xml")
+@ContextConfiguration("classpath:/conf/spring-test.xml")
 public class HibernateConfigTest {
 
     @Autowired

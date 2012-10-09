@@ -13,7 +13,7 @@
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springVersion>3.1.2.RELEASE</springVersion>
+        <springVersion>3.1.0.RELEASE</springVersion>
         <hibernateVersion>3.6.0.Final</hibernateVersion>
         <jacksonVersion>1.9.9</jacksonVersion>
     </properties>

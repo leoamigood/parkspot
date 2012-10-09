@@ -19,7 +19,6 @@ import java.util.List;
  * Time: 4:48 PM
  */
 @Controller
-//@RequestMapping("/location")
 public class LocationController {
 
     @Autowired
