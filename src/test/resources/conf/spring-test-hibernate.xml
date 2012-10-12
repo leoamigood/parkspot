@@ -15,8 +15,7 @@
         <property name="validationInterval" value="30000"/>
         <property name="maxActive" value="1" />
         <property name="maxWait" value="-1" />
-	<property name="removeAbandoned" value="true" />
-	<property name="removeAbandonedTimeout" value="5" />
+	<property name="removeAbandoned" value="false" />
         <property name="username" value="b0466e3031e273"/>
         <property name="password" value="237bc8cd"/>
     </bean>

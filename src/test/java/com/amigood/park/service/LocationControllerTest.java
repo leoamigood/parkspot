@@ -9,7 +9,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,7 +51,6 @@ public class LocationControllerTest {
     }
 
     @Test
-    @Transactional
     public void testGetLocations() throws Exception {
         requestMock.setMethod("GET");
         requestMock.setRequestURI("/location/40.606614,-73.987471/");

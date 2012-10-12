@@ -13,6 +13,8 @@
         <property name="testOnBorrow" value="true"/>
         <property name="validationQuery" value="select 1"/>
         <property name="validationInterval" value="30000"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="5"/>
         <property name="username" value="geo"/>
         <property name="password" value="geo"/>
     </bean>
@@ -30,6 +32,7 @@
                 hibernate.format_sql = true
                 hibernate.show_sql = false
                 hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+		hibernate.connection.release_mode = after_statement
             </value>
         </property>
     </bean>
