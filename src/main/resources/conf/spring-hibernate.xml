@@ -17,6 +17,7 @@
         <property name="maxIdle" value="5" />
         <property name="minIdle" value="3" />
         <property name="maxWait" value="-1" />
+        <property name="defaultReadOnly" value="true" />
         <property name="removeAbandoned" value="true" />
         <property name="removeAbandonedTimeout" value="5" />
         <property name="username" value="b0466e3031e273"/>
