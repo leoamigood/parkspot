@@ -78,7 +78,12 @@ public class AddressComponent {
         SCHOOL,
         LIBRARY,
         POST_OFFICE,
-        FINANCE;
+        FINANCE,
+        COURTHOUSE,
+        AIRPORT,
+        NEIGHBORHOOD,
+        ZOO,
+        AMUSEMENT_PARK;
 
         public static class Deserializer extends JsonDeserializer<Type> {
             @Override
