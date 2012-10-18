@@ -25,16 +25,16 @@ public class DotDAOImplTest {
 
     @Test
     public void testHappyGetLocations() throws Exception {
-        List<Location> locations = dao.getLocations(new Coordinates("40.655891", "-73.93064"), 10);
+        List<Location> locations = dao.getLocations(new Coordinates("40.576767", "-73.967161"), 10);
 
         Assert.assertEquals(10, locations.size());
 
         Location location = locations.get(0);
-        Assert.assertEquals("P-219746", location.getSign());
-        Assert.assertEquals("UTICA AVENUE", location.getMainStreet());
-        Assert.assertEquals("CLARKSON AVENUE", location.getFromStreet());
-        Assert.assertEquals("LENOX ROAD", location.getToStreet());
-        Assert.assertEquals("W", location.getOrientation());
+        Assert.assertEquals("P-234686", location.getSign());
+        Assert.assertEquals("BRIGHTON 1 STREET", location.getMainStreet());
+        Assert.assertEquals("BRIGHTON BEACH AVENUE", location.getFromStreet());
+        Assert.assertEquals("BRIGHTON 1 PLACE", location.getToStreet());
+        Assert.assertEquals("E", location.getOrientation());
         Assert.assertEquals(Location.Borough.K, location.getBorough());
     }
 
