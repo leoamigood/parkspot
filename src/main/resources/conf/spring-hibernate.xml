@@ -7,43 +7,75 @@
               http://www.springframework.org/schema/jdbc
               http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd">
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://us-cdbr-east-02.cleardb.com/heroku_ad2dc3ec837c1ef?reconnect=true"/>
-        <property name="testOnBorrow" value="true"/>
-        <property name="maxActive" value="10" />
-        <property name="maxIdle" value="5" />
-        <property name="minIdle" value="3" />
-        <property name="maxWait" value="-1" />
-        <property name="defaultReadOnly" value="true" />
-        <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
-        <property name="numTestsPerEvictionRun" value="3"/>
-        <property name="minEvictableIdleTimeMillis" value="1800000"/>
-        <property name="validationQuery" value="SELECT version();"/>
-        <property name="username" value="b0466e3031e273"/>
-        <property name="password" value="237bc8cd"/>
-    </bean>
+    <beans profile="dev">
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://localhost:3306/dot?reconnect=true"/>
+            <property name="testOnBorrow" value="true"/>
+            <property name="validationQuery" value="SELECT version();"/>
+            <property name="maxActive" value="1" />
+            <property name="maxWait" value="-1" />
+            <property name="removeAbandoned" value="false" />
+            <property name="username" value="geo"/>
+            <property name="password" value="geo"/>
+        </bean>
+    </beans>
+    <beans profile="production">
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://us-cdbr-east-02.cleardb.com/heroku_ad2dc3ec837c1ef?reconnect=true"/>
+            <property name="testOnBorrow" value="true"/>
+            <property name="maxActive" value="10" />
+            <property name="maxIdle" value="5" />
+            <property name="minIdle" value="3" />
+            <property name="maxWait" value="-1" />
+            <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+            <property name="numTestsPerEvictionRun" value="3"/>
+            <property name="minEvictableIdleTimeMillis" value="1800000"/>
+            <property name="validationQuery" value="SELECT version();"/>
+            <property name="username" value="b0466e3031e273"/>
+            <property name="password" value="237bc8cd"/>
+        </bean>
+    </beans>
+    <beans profile="staging">
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://us-cdbr-east-02.cleardb.com/heroku_8e48e4fe91ae9e0?reconnect=true"/>
+            <property name="testOnBorrow" value="true"/>
+            <property name="maxActive" value="10" />
+            <property name="maxIdle" value="5" />
+            <property name="minIdle" value="3" />
+            <property name="maxWait" value="-1" />
+            <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+            <property name="numTestsPerEvictionRun" value="3"/>
+            <property name="minEvictableIdleTimeMillis" value="1800000"/>
+            <property name="validationQuery" value="SELECT version();"/>
+            <property name="username" value="be69363090cb04"/>
+            <property name="password" value="98fec886"/>
+        </bean>
+    </beans>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="annotatedClasses">
-            <list>
-                <value>com.amigood.dot.domain.Location</value>
-                <value>com.amigood.dot.domain.ParkingSign</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <value>
-                hibernate.format_sql = true
-                hibernate.show_sql = false
-                hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-		hibernate.connection.release_mode = after_statement
-            </value>
-        </property>
-    </bean>
+    <beans profile="dev,staging,production">
+        <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="packagesToScan">
+                <list>
+                    <value>com.amigood.dot.domain</value>
+                </list>
+            </property>
+            <property name="hibernateProperties">
+                <value>
+                    hibernate.format_sql = true
+                    hibernate.show_sql = false
+                    hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            hibernate.connection.release_mode = after_statement
+                </value>
+            </property>
+        </bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+        <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+            <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+    </beans>
 
 </beans>

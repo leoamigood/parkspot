@@ -8,5 +8,4 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="classpath:/conf/spring-beans.xml"/>
-    <import resource="spring-test-hibernate.xml"/>
 </beans>
