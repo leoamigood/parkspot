@@ -88,7 +88,7 @@ public class LocationCoordinatesUpdater {
                     location.setValidated(true);
                 }
 
-                if ( ++i % 100 == 0 ) {
+                if ( ++i % 50 == 0 ) {
                     session.flush();
                 }
                 System.out.print(i + " rows processed.\r");

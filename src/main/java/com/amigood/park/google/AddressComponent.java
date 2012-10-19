@@ -83,7 +83,8 @@ public class AddressComponent {
         AIRPORT,
         NEIGHBORHOOD,
         ZOO,
-        AMUSEMENT_PARK;
+        AMUSEMENT_PARK,
+        AQUARIUM;
 
         public static class Deserializer extends JsonDeserializer<Type> {
             @Override
