@@ -21,6 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author leo@amigood.com | Leo Amigood, Chain Tale LLC
@@ -31,13 +32,17 @@ import java.util.List;
 public class LocationCoordinatesUpdater {
     private static final Logger logger = LoggerFactory.getLogger(LocationCoordinatesUpdater.class);
 
+    private Random random = new Random();
+
+    public static final int MAX_SLEEP_TIMEOUT = 5000;
+
     @Autowired
     private SessionFactory sessionFactory;
 
     @Autowired
     private GoogleLocationManager manager;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/conf/spring-beans.xml");
 
         LocationCoordinatesUpdater updater = context.getBean(LocationCoordinatesUpdater.class);
@@ -45,7 +50,7 @@ public class LocationCoordinatesUpdater {
     }
 
     @SuppressWarnings("unchecked")
-    public long updateLocations() {
+    public long updateLocations() throws InterruptedException {
         int i = 0;
         Session session = sessionFactory.openSession();
         try {
@@ -87,6 +92,8 @@ public class LocationCoordinatesUpdater {
                     location.setCoordinates(from, to);
                     location.setValidated(true);
                 }
+
+                Thread.sleep(random.nextInt(MAX_SLEEP_TIMEOUT));
 
                 if ( ++i % 50 == 0 ) {
                     session.flush();
