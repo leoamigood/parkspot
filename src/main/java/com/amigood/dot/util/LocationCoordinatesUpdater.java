@@ -34,7 +34,7 @@ public class LocationCoordinatesUpdater {
 
     private Random random = new Random();
 
-    public static final int MAX_SLEEP_TIMEOUT = 5000;
+    public static final int MAX_SLEEP_TIMEOUT = 15000;
 
     @Autowired
     private SessionFactory sessionFactory;
