@@ -4,9 +4,13 @@ import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.dot.domain.Location;
 import com.amigood.dot.domain.ParkingSign;
+import com.amigood.mvc.interceptor.ClientHeaderInterceptor;
 import com.amigood.park.exception.IntersectionException;
 import com.amigood.park.exception.LocationException;
 import com.amigood.park.service.GoogleLocationManager;
+import org.apache.http.HttpHost;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,8 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -34,7 +41,10 @@ public class LocationCoordinatesUpdater {
 
     private Random random = new Random();
 
-    public static final int MAX_SLEEP_TIMEOUT = 15000;
+    public static final int MAX_SLEEP_TIMEOUT = 1000;
+
+    @Autowired
+    private DefaultHttpClient httpClient;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -46,7 +56,17 @@ public class LocationCoordinatesUpdater {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/conf/spring-beans.xml");
 
         LocationCoordinatesUpdater updater = context.getBean(LocationCoordinatesUpdater.class);
+        //updater.initProxy(context);
         updater.updateLocations();
+    }
+
+    public void initProxy(ClassPathXmlApplicationContext context) {
+        HttpHost proxy = new HttpHost("us.proxymesh.com", 31280, "http");
+        httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+
+        //intercept request to print response headers
+        RestTemplate template = context.getBean(RestTemplate.class);
+        template.setInterceptors(Arrays.asList(new ClientHttpRequestInterceptor[] {context.getBean(ClientHeaderInterceptor.class)}));
     }
 
     @SuppressWarnings("unchecked")
@@ -63,7 +83,6 @@ public class LocationCoordinatesUpdater {
                                     );
 
             List<Location> locations = criteria.list();
-
             for (Location location: locations) {
                 LocationAddress mainAddress = location.getAddress(location.getMainStreet());
                 LocationAddress fromAddress = location.getAddress(location.getFromStreet());
@@ -93,7 +112,7 @@ public class LocationCoordinatesUpdater {
                     location.setValidated(true);
                 }
 
-                Thread.sleep(random.nextInt(MAX_SLEEP_TIMEOUT));
+                if (MAX_SLEEP_TIMEOUT > 0) Thread.sleep(random.nextInt(MAX_SLEEP_TIMEOUT));
 
                 if ( ++i % 50 == 0 ) {
                     session.flush();

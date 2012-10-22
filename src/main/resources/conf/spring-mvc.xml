@@ -26,6 +26,13 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+    <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient"/>
+    <bean id="httpClientFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+        <constructor-arg ref="httpClient"/>
+    </bean>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg ref="httpClientFactory"/>
+    </bean>
 
 </beans>

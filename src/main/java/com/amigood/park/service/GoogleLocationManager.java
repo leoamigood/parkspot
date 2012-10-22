@@ -34,14 +34,14 @@ public class GoogleLocationManager implements LocationManager {
         String url = String.format("%s/geocode/%s?address=%s+and+%s&components=intersection&sensor=false", api, protocol, address1, address2);
 
         try {
-            GoogleGeoResponse geo = template.getForEntity(url, GoogleGeoResponse.class).getBody();
-            if (geo.getStatus() != GoogleResponseStatus.OK) {
-                throw new LocationException(geo.getStatus().toString());
+            GoogleGeoResponse response = template.getForEntity(url, GoogleGeoResponse.class).getBody();
+            if (response.getStatus() != GoogleResponseStatus.OK) {
+                throw new LocationException(response.getStatus().toString());
             }
 
-            if (geo.getComponents().size() == 1 &&
-                    geo.getComponents().get(0).getTypes().contains(AddressComponent.Type.INTERSECTION)) {
-                return geo.getComponents().get(0).getGeometry().getCoordinates();
+            if (response.getComponents().size() == 1 &&
+                    response.getComponents().get(0).getTypes().contains(AddressComponent.Type.INTERSECTION)) {
+                return response.getComponents().get(0).getGeometry().getCoordinates();
             } else {
                 return null;
             }
