@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -20,22 +21,25 @@ import java.util.List;
  */
 @Controller
 public class LocationController {
+    public static final int MAX_LOCATIONS = 25;
 
     @Autowired
     private StreetManagerImpl manager;
+
+    private final DecimalFormat format = new DecimalFormat("0.######");
 
     // Using regexp matching as setting useDefaultSuffixPattern to false
     // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
     @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     @ResponseBody
-    public List<Location> getLocations(@PathVariable String latitude, @PathVariable String longitude, Model model) {
+    public List<Location> getLocations(@PathVariable Double latitude, @PathVariable Double longitude, Model model) {
         return getLocationsLimited(latitude, longitude, 10, model);
     }
 
     @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude}/{limit}"})
     @ResponseBody
-    public List<Location> getLocationsLimited(@PathVariable String latitude, @PathVariable String longitude, @PathVariable Integer limit, Model model) {
-        return manager.getLocations(new Coordinates(latitude, longitude), limit);
+    public List<Location> getLocationsLimited(@PathVariable Double latitude, @PathVariable Double longitude, @PathVariable Integer limit, Model model) {
+        return manager.getLocations(new Coordinates(format.format(latitude), format.format(longitude)), Math.min(limit, MAX_LOCATIONS));
     }
 
     public StreetManagerImpl getManager() {

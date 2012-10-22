@@ -12,11 +12,11 @@ public class Coordinates {
 
     @Override
     public String toString() {
-        return String.format("%s,%s", longitude, latitude);
+        return String.format("%s,%s", latitude, longitude);
     }
 
-    private Double longitude;
     private Double latitude;
+    private Double longitude;
 
     public Coordinates() {
     }
@@ -24,14 +24,6 @@ public class Coordinates {
     public Coordinates(String latitude, String longitude) {
         this.latitude = Double.parseDouble(latitude);
         this.longitude = Double.parseDouble(longitude);
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
     public Double getLatitude() {
@@ -42,7 +34,12 @@ public class Coordinates {
         this.latitude = latitude;
     }
 
-    public Double[] getAsArray() {
-        return new Double[]{latitude, longitude};
+    public Double getLongitude() {
+        return longitude;
     }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
 }

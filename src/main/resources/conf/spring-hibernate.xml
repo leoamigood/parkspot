@@ -74,7 +74,7 @@
                     hibernate.format_sql = true
                     hibernate.show_sql = false
                     hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-            hibernate.connection.release_mode = after_statement
+                    hibernate.connection.release_mode = after_statement
                 </value>
             </property>
         </bean>
