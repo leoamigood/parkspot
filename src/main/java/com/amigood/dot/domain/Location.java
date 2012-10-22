@@ -2,8 +2,13 @@ package com.amigood.dot.domain;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
@@ -41,6 +46,7 @@ import java.util.List;
 
 @Entity
 @Table(name="location")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Location implements Serializable {
 
     public enum Borough {
