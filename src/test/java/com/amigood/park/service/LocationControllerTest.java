@@ -53,7 +53,7 @@ public class LocationControllerTest {
     @Test
     public void testGetLocations() throws Exception {
         requestMock.setMethod("GET");
-        requestMock.setRequestURI("/location/40.606614,-73.987471/");
+        requestMock.setRequestURI("/location/40.60661439639105,-73.98747128362048/");
 
         Object controller = handlerMapping.getHandler(requestMock).getHandler();
         final HandlerInterceptor[] interceptors = handlerMapping.getHandler(requestMock).getInterceptors();

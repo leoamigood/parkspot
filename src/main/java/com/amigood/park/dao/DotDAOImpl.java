@@ -5,6 +5,7 @@ import com.amigood.dot.domain.Location;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,7 @@ public class DotDAOImpl extends HibernateTemplate implements DotDAO {
         setSessionFactory(sessionFactory);
     }
 
+    @Cacheable(value = "locations", key = "#coordinates.toString() + #limit")
     public List<Location> getLocations(Coordinates coordinates, Integer limit) {
         Query query = getSession().getNamedQuery("findClosestStreet");
         query.setDouble("fromLat", coordinates.getLatitude());

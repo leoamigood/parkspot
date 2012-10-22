@@ -24,8 +24,8 @@ public class DotDAOImplTest {
     DotDAO dao;
 
     @Test
-    public void testHappyGetLocations() throws Exception {
-        List<Location> locations = dao.getLocations(new Coordinates("40.576767", "-73.967161"), 10);
+    public void testGetLocations() throws Exception {
+        List<Location> locations = dao.getLocations(new Coordinates("40.57676732328746", "-73.96716132152508"), 10);
 
         Assert.assertEquals(10, locations.size());
 
@@ -37,9 +37,5 @@ public class DotDAOImplTest {
         Assert.assertEquals("E", location.getOrientation());
         Assert.assertEquals(Location.Borough.K, location.getBorough());
     }
-
-//    @Test
-//    public void testSadGetLocations() throws Exception {
-//    }
 
 }
