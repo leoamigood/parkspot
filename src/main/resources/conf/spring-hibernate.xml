@@ -7,6 +7,10 @@
               http://www.springframework.org/schema/jdbc
               http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd">
 
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <beans profile="dev">
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -19,49 +23,6 @@
             <property name="username" value="geo"/>
             <property name="password" value="geo"/>
         </bean>
-    </beans>
-    <beans profile="production">
-        <bean class="java.net.URI" id="dbUrl">
-            <constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
-        </bean>
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
-            <property name="testOnBorrow" value="true"/>
-            <property name="maxActive" value="10" />
-            <property name="maxIdle" value="5" />
-            <property name="minIdle" value="3" />
-            <property name="maxWait" value="-1" />
-            <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
-            <property name="numTestsPerEvictionRun" value="3"/>
-            <property name="minEvictableIdleTimeMillis" value="1800000"/>
-            <property name="validationQuery" value="SELECT version();"/>
-            <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-            <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
-        </bean>
-    </beans>
-    <beans profile="staging">
-        <bean class="java.net.URI" id="dbUrl">
-            <constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
-        </bean>
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
-            <property name="testOnBorrow" value="true"/>
-            <property name="maxActive" value="10" />
-            <property name="maxIdle" value="5" />
-            <property name="minIdle" value="3" />
-            <property name="maxWait" value="-1" />
-            <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
-            <property name="numTestsPerEvictionRun" value="3"/>
-            <property name="minEvictableIdleTimeMillis" value="1800000"/>
-            <property name="validationQuery" value="SELECT version();"/>
-            <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-            <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
-        </bean>
-    </beans>
-
-    <beans profile="dev,staging,production">
         <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
             <property name="dataSource" ref="dataSource"/>
             <property name="packagesToScan">
@@ -75,12 +36,50 @@
                     hibernate.show_sql = false
                     hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
                     hibernate.connection.release_mode = after_statement
+                    hibernate.cache.use_second_level_cache = false
+                    hibernate.cache.region.factory_class = net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory
+                    hibernate.generate_statistics = true
                 </value>
             </property>
         </bean>
-
-        <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-            <property name="sessionFactory" ref="sessionFactory"/>
+    </beans>
+    <beans profile="staging,production">
+        <bean class="java.net.URI" id="dbUrl">
+            <constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
+        </bean>
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
+            <property name="testOnBorrow" value="true"/>
+            <property name="maxActive" value="10" />
+            <property name="maxIdle" value="5" />
+            <property name="minIdle" value="3" />
+            <property name="maxWait" value="-1" />
+            <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+            <property name="numTestsPerEvictionRun" value="3"/>
+            <property name="minEvictableIdleTimeMillis" value="1800000"/>
+            <property name="validationQuery" value="SELECT version();"/>
+            <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+            <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
+        </bean>
+        <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="packagesToScan">
+                <list>
+                    <value>com.amigood.dot.domain</value>
+                </list>
+            </property>
+            <property name="hibernateProperties">
+                <value>
+                    hibernate.format_sql = true
+                    hibernate.show_sql = false
+                    hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+                    hibernate.connection.release_mode = after_statement
+                    hibernate.cache.use_second_level_cache = true
+                    hibernate.cache.region.factory_class = net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory
+                    hibernate.generate_statistics = false
+                </value>
+            </property>
         </bean>
     </beans>
 

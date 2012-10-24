@@ -24,14 +24,16 @@ public class DotDAOImpl extends HibernateTemplate implements DotDAO {
         setSessionFactory(sessionFactory);
     }
 
-    @Cacheable(value = "locations", key = "#coordinates.toString() + #limit")
+    @Cacheable(value = "closestLocations", key = "#coordinates.toString() + #limit")
     public List<Location> getLocations(Coordinates coordinates, Integer limit) {
         Query query = getSession().getNamedQuery("findClosestStreet");
         query.setDouble("fromLat", coordinates.getLatitude());
         query.setDouble("fromLng", coordinates.getLongitude());
         query.setInteger("limit", limit);
 
-        return query.list();
+        List<Location> locations = query.list();
+
+        return locations;
     }
 
 }

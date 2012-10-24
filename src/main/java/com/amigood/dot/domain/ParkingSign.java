@@ -1,6 +1,10 @@
 package com.amigood.dot.domain;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -10,6 +14,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name="signs")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class ParkingSign implements Serializable {
 
     @EmbeddedId
