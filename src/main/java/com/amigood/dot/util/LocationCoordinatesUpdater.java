@@ -128,7 +128,7 @@ public class LocationCoordinatesUpdater {
         } finally {
             session.flush();
             session.close();
-            System.out.print(i + " rows updated.\r");
+            System.out.println(i + " rows updated.");
         }
 
         return i;

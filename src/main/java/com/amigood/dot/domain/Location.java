@@ -23,9 +23,9 @@ import java.util.List;
         @NamedNativeQuery(
                 name = "findClosestStreet",
                 query = "SELECT *, (a+b+c)/2 as p FROM (" +
-                                "SELECT *, length as a, sqrt(pow(abs(:fromLng) - abs(from_lng), 2) + pow(abs(:fromLat) - abs(from_lat), 2)) as b, sqrt(pow(abs(:fromLng) - abs(to_lng), 2) + pow(abs(:fromLat) - abs(to_lat), 2)) as c FROM (" +
+                                "SELECT *, length as a, sqrt(pow(:fromLng - from_lng, 2) + pow(:fromLat - from_lat, 2)) as b, sqrt(pow(:fromLng - to_lng, 2) + pow(:fromLat - to_lat, 2)) as c FROM (" +
                                     "SELECT * FROM location WHERE from_lng is not null AND from_lat is not null AND to_lng is not null AND to_lat is not null AND validated = 1 " +
-                                    "ORDER BY abs(abs(:fromLng) - abs(center_lng)) + abs(abs(:fromLat) - abs(center_lat)) limit :limit" +
+                                    "ORDER BY abs(:fromLng - center_lng) + abs(:fromLat - center_lat) ASC limit :limit" +
                                 ") as nearby " +
                         ") as triangle ORDER BY 2/a * sqrt(p*(p-a)*(p-b)*(p-c)) asc",
                 resultClass = Location.class
