@@ -4,6 +4,7 @@ import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.dot.domain.Location;
 import com.amigood.dot.domain.ParkingSign;
+import com.amigood.log.Loggable;
 import com.amigood.mvc.interceptor.ClientHeaderInterceptor;
 import com.amigood.park.exception.IntersectionException;
 import com.amigood.park.exception.LocationException;
@@ -19,7 +20,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -34,10 +34,14 @@ import java.util.Random;
  * @author leo@amigood.com | Leo Amigood, Chain Tale LLC
  *         Date: 9/7/12
  *         Time: 10:30 PM
+ *
+ *  Run this class to update location of street cross by retrieving it via Google Maps API
+ *  You may use proxy to avoid Google's quota limitations
  */
 @Component
 public class LocationCoordinatesUpdater {
-    private static final Logger logger = LoggerFactory.getLogger(LocationCoordinatesUpdater.class);
+    @Loggable
+    private static Logger logger;
 
     private Random random = new Random();
 

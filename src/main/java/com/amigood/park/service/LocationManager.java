@@ -1,5 +1,9 @@
 package com.amigood.park.service;
 
+import com.amigood.domain.Coordinates;
+import com.amigood.domain.LocationAddress;
+import com.amigood.park.exception.LocationException;
+
 /**
  * @author leo@amigood.com | Leo Amigood, Chain Tale LLC
  *         Date: 8/19/12
@@ -7,6 +11,6 @@ package com.amigood.park.service;
  */
 public interface LocationManager {
 
-    //public Coordinates findIntersection(LocationAddress address1, LocationAddress address2) throws LocationException;
+    public Coordinates findIntersection(LocationAddress address1, LocationAddress address2) throws LocationException;
 
 }

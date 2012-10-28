@@ -3,12 +3,12 @@ package com.amigood.park.service;
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
+import com.amigood.log.Loggable;
 import com.amigood.park.exception.LocationException;
 import com.amigood.park.google.AddressComponent;
 import com.amigood.park.google.GoogleGeoResponse;
 import com.amigood.park.google.GoogleResponseStatus;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,8 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class GoogleLocationManager implements LocationManager {
-    private static final Logger logger = LoggerFactory.getLogger(GoogleLocationManager.class);
+    @Loggable
+    private static Logger logger;
 
     private String api = "http://maps.googleapis.com/maps/api";
 
