@@ -33,11 +33,11 @@ CREATE TABLE `location` (
 CREATE TABLE `signs` (
   `borough` enum('B','K','Q','M','S') NOT NULL DEFAULT 'B',
   `sign_number` varchar(8) NOT NULL DEFAULT '',
-  `order` int(4) NOT NULL,
+  `sign_order` int(4) NOT NULL,
   `distance` int(11) NOT NULL,
   `description` varchar(255) NOT NULL DEFAULT '',
   `direction` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`borough`,`sign_number`,`order`),
+  PRIMARY KEY (`borough`,`sign_number`,`sign_order`),
   KEY `sign_number_idx` (`sign_number`),
   KEY `description_idx` (`description`),
   KEY `sign_number` (`sign_number`,`borough`),

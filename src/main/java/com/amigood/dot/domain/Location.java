@@ -22,12 +22,14 @@ import java.util.List;
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = "findClosestStreet",
-                query = "SELECT *, (a+b+c)/2 as p FROM (" +
-                                "SELECT *, length as a, sqrt(pow(:fromLng - from_lng, 2) + pow(:fromLat - from_lat, 2)) as b, sqrt(pow(:fromLng - to_lng, 2) + pow(:fromLat - to_lat, 2)) as c FROM (" +
+                query = "SELECT * FROM (" +
+                            "SELECT *, (a+b+c)/2 as p FROM (" +
+                                "SELECT *, length as a, sqrt(power(:fromLng - from_lng, 2) + power(:fromLat - from_lat, 2)) as b, sqrt(power(:fromLng - to_lng, 2) + power(:fromLat - to_lat, 2)) as c FROM (" +
                                     "SELECT * FROM location WHERE from_lng is not null AND from_lat is not null AND to_lng is not null AND to_lat is not null AND validated = 1 " +
                                     "ORDER BY abs(:fromLng - center_lng) + abs(:fromLat - center_lat) ASC limit :limit" +
                                 ") as nearby " +
-                        ") as triangle ORDER BY 2/a * sqrt(p*(p-a)*(p-b)*(p-c)) asc",
+                            ") as triangle " +
+                        ") as location ORDER BY 2/a * sqrt(p*(p-a)*(p-b)*(p-c)) asc",
                 resultClass = Location.class
         ),
 })
@@ -38,7 +40,7 @@ import java.util.List;
  *  UPDATE location SET center_lat = (from_lat + to_lat) / 2, center_lng = (from_lng + to_lng) / 2;
  *
  *  Refresh street distance
- *  UPDATE location SET length = sqrt(pow(from_lng - to_lng, 2) + pow(from_lat - to_lat, 2));
+ *  UPDATE location SET length = sqrt(power(from_lng - to_lng, 2) + power(from_lat - to_lat, 2));
  *
  *  279,000 is the length scaling constant in feet
  *  For example, to calculate the length of "AVENUE Y" between "OCEAN AVENUE" and "EAST 19 STREET" in "BROOKLYN, NY"

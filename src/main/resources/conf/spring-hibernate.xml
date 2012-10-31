@@ -43,6 +43,31 @@
             </property>
         </bean>
     </beans>
+    <beans profile="test">
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="org.h2.Driver"/>
+            <property name="url" value="jdbc:h2:mem:dot;MODE=MYSQL;INIT=RUNSCRIPT FROM 'target/test-classes/db/h2_init.sql'"/>
+        </bean>
+        <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="packagesToScan">
+                <list>
+                    <value>com.amigood.dot.domain</value>
+                </list>
+            </property>
+            <property name="hibernateProperties">
+                <value>
+                    hibernate.format_sql = true
+                    hibernate.show_sql = false
+                    hibernate.dialect = org.hibernate.dialect.H2Dialect
+                    hibernate.connection.release_mode = after_statement
+                    hibernate.cache.use_second_level_cache = false
+                    hibernate.cache.region.factory_class = net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory
+                    hibernate.generate_statistics = true
+                </value>
+            </property>
+        </bean>
+    </beans>
     <beans profile="staging,production">
         <bean class="java.net.URI" id="dbUrl">
             <constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
@@ -51,7 +76,7 @@
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
             <property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
             <property name="testOnBorrow" value="true"/>
-            <property name="maxActive" value="10" />
+            <property name="maxActive" value="13" />
             <property name="maxIdle" value="5" />
             <property name="minIdle" value="3" />
             <property name="maxWait" value="-1" />
@@ -75,7 +100,7 @@
                     hibernate.show_sql = false
                     hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
                     hibernate.connection.release_mode = after_statement
-                    hibernate.cache.use_second_level_cache = true
+                    hibernate.cache.use_second_level_cache = false
                     hibernate.cache.region.factory_class = net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory
                     hibernate.generate_statistics = false
                 </value>

@@ -27,7 +27,7 @@ public class ParkingSign implements Serializable {
         @Column(name = "sign_number")
         private String sign;
 
-        @Column
+        @Column(name = "sign_order")
         private Integer order;
 
         public ParkingSignPk() {
@@ -92,7 +92,7 @@ public class ParkingSign implements Serializable {
     @Column(name="sign_number", insertable=false, updatable=false)
     private String number;
 
-    @Column(insertable=false, updatable=false)
+    @Column(name = "sign_order", insertable=false, updatable=false)
     private Integer order;
 
     @Column
