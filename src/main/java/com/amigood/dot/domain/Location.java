@@ -2,14 +2,12 @@ package com.amigood.dot.domain;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
-import org.hibernate.annotations.*;
+import com.vividsolutions.jts.geom.Point;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,20 +17,6 @@ import java.util.List;
  *         Time: 11:45 AM
  */
 
-@NamedNativeQueries({
-        @NamedNativeQuery(
-                name = "findClosestStreet",
-                query = "SELECT * FROM (" +
-                            "SELECT *, (a+b+c)/2 as p FROM (" +
-                                "SELECT *, length as a, sqrt(power(:fromLng - from_lng, 2) + power(:fromLat - from_lat, 2)) as b, sqrt(power(:fromLng - to_lng, 2) + power(:fromLat - to_lat, 2)) as c FROM (" +
-                                    "SELECT * FROM location WHERE from_lng is not null AND from_lat is not null AND to_lng is not null AND to_lat is not null AND validated = 1 " +
-                                    "ORDER BY abs(:fromLng - center_lng) + abs(:fromLat - center_lat) ASC limit :limit" +
-                                ") as nearby " +
-                            ") as triangle " +
-                        ") as location ORDER BY 2/a * sqrt(p*(p-a)*(p-b)*(p-c)) asc",
-                resultClass = Location.class
-        ),
-})
 /**
  *  Additional queries:
  *
@@ -41,10 +25,6 @@ import java.util.List;
  *
  *  Refresh street distance
  *  UPDATE location SET length = sqrt(power(from_lng - to_lng, 2) + power(from_lat - to_lat, 2));
- *
- *  279,000 is the length scaling constant in feet
- *  For example, to calculate the length of "AVENUE Y" between "OCEAN AVENUE" and "EAST 19 STREET" in "BROOKLYN, NY"
- *  Use this formula (length * 279,000) = 0.0012012523631590181 * 279,000 =~ 335 feet
  */
 
 @Entity
@@ -170,6 +150,10 @@ public class Location implements Serializable {
 
     @Column(name = "center_lng")
     private Double centerLng;
+
+    @Column (name = "center_geo")
+    @Type(type = "org.hibernatespatial.GeometryUserType")
+    private Point centerGeo;
 
     @Column
     private Double length;

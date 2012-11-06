@@ -9,6 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Coordinates {
+    /*
+     *  FEET_TO_LENGTH is the length scaling constant in feet
+     *  For example, to calculate the length of "AVENUE Y" between "OCEAN AVENUE" and "EAST 19 STREET" in "BROOKLYN, NY"
+     *  Use this formula (length * FEET_TO_LENGTH) = 0.0012012523631590181 * 278875.622038 =~ 335 feet
+     */
+    public static final double FEET_TO_LENGTH = 278875.622038;
+    public static final double METER_TO_LENGTH = 111076.675549;
 
     @Override
     public String toString() {
@@ -42,4 +49,15 @@ public class Coordinates {
         this.longitude = longitude;
     }
 
+    public Double[] getNearbyArea(double feet) {
+        Double distance = feet / FEET_TO_LENGTH;
+
+        return new Double[] {
+                latitude - distance, longitude - distance,
+                latitude - distance, longitude + distance,
+                latitude + distance, longitude + distance,
+                latitude + distance, longitude - distance,
+                latitude - distance, longitude - distance
+        };
+    }
 }

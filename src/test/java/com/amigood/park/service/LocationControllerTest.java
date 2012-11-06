@@ -1,8 +1,10 @@
 package com.amigood.park.service;
 
+import com.amigood.test.SpatialTests;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -29,6 +31,7 @@ import static org.mockito.Mockito.mock;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/conf/spring-test.xml")
+@Category(SpatialTests.class)
 public class LocationControllerTest {
 
     MockHttpServletRequest requestMock;
@@ -73,7 +76,7 @@ public class LocationControllerTest {
         assertNull(model);
 
         List<Map> locations = new ObjectMapper().readValue(responseMock.getContentAsString(), List.class);
-        assertEquals("S-113531", locations.get(0).get("sign"));
+        assertEquals("S-214406", locations.get(0).get("sign"));
     }
 
 }

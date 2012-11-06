@@ -2,6 +2,7 @@ package com.amigood.park.service;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.dot.domain.Location;
+import com.amigood.park.exception.LocationException;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ import java.util.List;
  */
 public interface StreetManager {
 
-    public List<Location> getLocations(Coordinates coordinates, Integer total);
+    public List<Location> getLocations(Coordinates coordinates, Double distance) throws LocationException;
 
 }

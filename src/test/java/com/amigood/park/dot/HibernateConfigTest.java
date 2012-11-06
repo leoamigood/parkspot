@@ -2,10 +2,12 @@ package com.amigood.park.dot;
 
 import com.amigood.dot.domain.Location;
 import com.amigood.dot.domain.ParkingSign;
+import com.amigood.test.SpatialTests;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,6 +23,7 @@ import static junit.framework.Assert.assertNull;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/conf/spring-test.xml")
+@Category(SpatialTests.class)
 public class HibernateConfigTest {
 
     @Autowired

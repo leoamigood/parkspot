@@ -3,6 +3,7 @@ package com.amigood.park.service;
 import com.amigood.domain.Coordinates;
 import com.amigood.dot.domain.Location;
 import com.amigood.park.dao.DotDAO;
+import com.amigood.park.exception.LocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class StreetManagerImpl implements StreetManager {
     private DotDAO dao;
 
     @Override
-    public List<Location> getLocations(Coordinates coordinates, Integer total) {
-        return dao.getLocations(coordinates, total);
+    public List<Location> getLocations(Coordinates coordinates, Double distance) throws LocationException {
+        return dao.getLocations(coordinates, distance);
     }
 }

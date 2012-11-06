@@ -2,6 +2,7 @@ package com.amigood.park;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.dot.domain.Location;
+import com.amigood.park.exception.LocationException;
 import com.amigood.park.service.StreetManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @Controller
 public class LocationController {
-    public static final int MAX_LOCATIONS = 25;
+    public static final double MAX_DISTANCE = 1500;
 
     @Autowired
     private StreetManagerImpl manager;
@@ -32,14 +33,16 @@ public class LocationController {
     // in RequestMappingHandlerMapping or DefaultAnnotationHandlerMapping does not seem to help
     @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude:.+}", "/location/{latitude},{longitude}/"})
     @ResponseBody
-    public List<Location> getLocations(@PathVariable Double latitude, @PathVariable Double longitude, Model model) {
-        return getLocationsLimited(latitude, longitude, 10, model);
+    public List<Location> getLocations(@PathVariable Double latitude, @PathVariable Double longitude, Model model) throws LocationException {
+        return getLocationsLimited(latitude, longitude, 300.0, model);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude}/{limit}"})
+    @RequestMapping(method = RequestMethod.GET, value={"/location/{latitude},{longitude}/{distance}"})
     @ResponseBody
-    public List<Location> getLocationsLimited(@PathVariable Double latitude, @PathVariable Double longitude, @PathVariable Integer limit, Model model) {
-        return manager.getLocations(new Coordinates(format.format(latitude), format.format(longitude)), Math.min(limit, MAX_LOCATIONS));
+    public List<Location> getLocationsLimited(@PathVariable Double latitude, @PathVariable Double longitude, @PathVariable Double distance, Model model) throws LocationException {
+        Coordinates coordinates = new Coordinates(format.format(latitude), format.format(longitude));
+
+        return manager.getLocations(coordinates, Math.min(distance, MAX_DISTANCE));
     }
 
     public StreetManagerImpl getManager() {

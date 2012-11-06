@@ -1,6 +1,7 @@
 package com.amigood.park.dao;
 
 import com.amigood.domain.Coordinates;
+import com.amigood.park.exception.LocationException;
 
 import java.util.List;
 
@@ -11,6 +12,6 @@ import java.util.List;
  */
 public interface DotDAO {
 
-    public List getLocations(Coordinates coordinates, Integer limit);
+    public List getLocations(Coordinates coordinates, Double distance) throws LocationException;
 
 }

@@ -2,8 +2,10 @@ package com.amigood.park.dao;
 
 import com.amigood.domain.Coordinates;
 import com.amigood.dot.domain.Location;
+import com.amigood.test.SpatialTests;
 import junit.framework.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/conf/spring-test.xml")
+@Category(SpatialTests.class)
 public class DotDAOImplTest {
 
     @Autowired
@@ -25,9 +28,9 @@ public class DotDAOImplTest {
 
     @Test
     public void testGetLocations() throws Exception {
-        List<Location> locations = dao.getLocations(new Coordinates("40.57676732328746", "-73.96716132152508"), 10);
+        List<Location> locations = dao.getLocations(new Coordinates("40.57676732328746", "-73.96716132152508"), 279.0);
 
-	Assert.assertNotNull(locations);
+    	Assert.assertNotNull(locations);
         Assert.assertEquals(10, locations.size());
 
         Location location = locations.get(0);
