@@ -22,12 +22,6 @@
             <id>OSGEO GeoTools repo</id>
             <url>http://download.osgeo.org/webdav/geotools</url>
         </repository>
-<!--
-        <repository>
-            <id>Open Geo repo</id>
-            <url>http://repo.opengeo.org</url>
-        </repository>
--->
         <repository>
             <id>Hibernate Spatial repo</id>
             <url>http://www.hibernatespatial.org/repository</url>
@@ -181,12 +175,28 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>2.5.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
                     <argLine>-Xmx2048m</argLine>
                     <encoding>ISO-8859-1</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-clover2-plugin</artifactId>
+                <version>3.1.7</version>
+		<configuration>
+		    <includesTestSourceRoots>false</includesTestSourceRoots>
+		</configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode</groupId>
+                <artifactId>maven-idea-plugin</artifactId>
+                <version>1.6</version>
+                <configuration>
+                    <exclude>target/clover</exclude>
                 </configuration>
             </plugin>
             <plugin>
