@@ -196,9 +196,9 @@
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-clover2-plugin</artifactId>
                 <version>3.1.7</version>
-                <configuration>
-                    <includesTestSourceRoots>false</includesTestSourceRoots>
-                </configuration>
+		<configuration>
+		    <includesTestSourceRoots>false</includesTestSourceRoots>
+		</configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
