@@ -23,6 +23,10 @@
             <url>http://download.osgeo.org/webdav/geotools</url>
         </repository>
         <repository>
+            <id>GeoDB repo</id>
+            <url>http://repo.opengeo.org</url>
+        </repository>
+        <repository>
             <id>Hibernate Spatial repo</id>
             <url>http://www.hibernatespatial.org/repository</url>
         </repository>
@@ -96,6 +100,11 @@
         <dependency>
             <groupId>org.hibernatespatial</groupId>
             <artifactId>hibernate-spatial-mysql</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernatespatial</groupId>
+            <artifactId>hibernate-spatial-h2-geodb</artifactId>
             <version>1.1.1</version>
         </dependency>
         <dependency>
@@ -187,16 +196,8 @@
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-clover2-plugin</artifactId>
                 <version>3.1.7</version>
-		<configuration>
-		    <includesTestSourceRoots>false</includesTestSourceRoots>
-		</configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.googlecode</groupId>
-                <artifactId>maven-idea-plugin</artifactId>
-                <version>1.6</version>
                 <configuration>
-                    <exclude>target/clover</exclude>
+                    <includesTestSourceRoots>false</includesTestSourceRoots>
                 </configuration>
             </plugin>
             <plugin>

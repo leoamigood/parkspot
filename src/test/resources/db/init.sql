@@ -22,12 +22,14 @@ CREATE TABLE `location` (
   `validated` tinyint(1) NOT NULL,
   `offset_lat` double NOT NULL DEFAULT '0',
   `offset_lng` double NOT NULL DEFAULT '0',
+  `center_geo` point NOT NULL,
   PRIMARY KEY (`borough`,`sign_number`),
   KEY `main_street_idx` (`main_street`),
   KEY `sign_number_idx` (`sign_number`),
   KEY `from_street_idx` (`from_street`),
-  KEY `to_street_idx` (`to_street`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `to_street_idx` (`to_street`),
+  SPATIAL KEY `center_geo` (`center_geo`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /* signs table contains signs details */
 CREATE TABLE `signs` (
@@ -41,5 +43,5 @@ CREATE TABLE `signs` (
   KEY `sign_number_idx` (`sign_number`),
   KEY `description_idx` (`description`),
   KEY `sign_number` (`sign_number`,`borough`),
-  CONSTRAINT `signs_ibfk_1` FOREIGN KEY (`sign_number`, `borough`) REFERENCES `location` (`sign_number`, `borough`)
+  CONSTRAINT `signs_ibfk_1` FOREIGN KEY (`sign_number`, `borough`) REFERENCES `spatial`.`location` (`sign_number`, `borough`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

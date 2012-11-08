@@ -11,7 +11,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <beans profile="dev">
+    <beans profile="mysql-dev">
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
             <property name="url" value="jdbc:mysql://localhost:3306/dot?reconnect=true"/>
@@ -43,14 +43,14 @@
             </property>
         </bean>
     </beans>
-    <beans profile="test">
+    <beans profile="dev,test">
         <jdbc:initialize-database data-source="dataSource">
             <jdbc:script location="classpath:db/h2_init.sql"/>
         </jdbc:initialize-database>
 
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <property name="driverClassName" value="org.h2.Driver"/>
-            <property name="url" value="jdbc:h2:mem:dot;MODE=MYSQL;"/>
+            <property name="url" value="jdbc:h2:mem:dot"/>
         </bean>
         <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
             <property name="dataSource" ref="dataSource"/>
@@ -63,7 +63,7 @@
                 <value>
                     hibernate.format_sql = true
                     hibernate.show_sql = false
-                    hibernate.dialect = org.hibernate.dialect.H2Dialect
+                    hibernate.dialect = org.hibernatespatial.geodb.GeoDBDialect
                     hibernate.connection.release_mode = after_statement
                     hibernate.cache.use_second_level_cache = false
                     hibernate.cache.region.factory_class = net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory

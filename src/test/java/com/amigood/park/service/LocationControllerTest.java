@@ -1,6 +1,7 @@
 package com.amigood.park.service;
 
 import com.amigood.test.SpatialTests;
+import junit.framework.Assert;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class LocationControllerTest {
     @Test
     public void testGetLocations() throws Exception {
         requestMock.setMethod("GET");
-        requestMock.setRequestURI("/location/40.60661439639105,-73.98747128362048/");
+        requestMock.setRequestURI("/location/40.60661439639105,-73.98747128362048");
 
         Object controller = handlerMapping.getHandler(requestMock).getHandler();
         final HandlerInterceptor[] interceptors = handlerMapping.getHandler(requestMock).getInterceptors();
@@ -76,6 +77,8 @@ public class LocationControllerTest {
         assertNull(model);
 
         List<Map> locations = new ObjectMapper().readValue(responseMock.getContentAsString(), List.class);
+
+        Assert.assertNotNull(locations);
         assertEquals("S-214406", locations.get(0).get("sign"));
     }
 
