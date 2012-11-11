@@ -5,7 +5,6 @@ import com.amigood.domain.LocationAddress;
 import com.vividsolutions.jts.geom.Point;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -30,7 +29,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "location")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Location implements Serializable {
 
     public enum Borough {
@@ -50,7 +49,7 @@ public class Location implements Serializable {
     @EmbeddedId
     private LocationPk id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumns({@JoinColumn(name = "borough"), @JoinColumn(name = "sign_number")})
     @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
     private List<ParkingSign> signs;
@@ -117,6 +116,7 @@ public class Location implements Serializable {
     }
 
     @Column(insertable=false, updatable=false)
+    @Enumerated(EnumType.STRING)
     private Borough borough;
 
     @Column(name = "sign_number", insertable=false, updatable=false)
@@ -153,7 +153,7 @@ public class Location implements Serializable {
     private Double centerLng;
 
     @Column (name = "center_geo")
-    @Type(type = "org.hibernatespatial.GeometryUserType")
+    @Type(type = "org.hibernate.spatial.GeometryType")
     private Point centerGeo;
 
     @Column

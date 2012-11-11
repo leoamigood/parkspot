@@ -4,7 +4,7 @@ import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.amigood.domain.Protocol;
 import com.amigood.park.google.GoogleGeoResponse;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

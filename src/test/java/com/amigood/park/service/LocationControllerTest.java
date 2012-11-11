@@ -1,8 +1,8 @@
 package com.amigood.park.service;
 
 import com.amigood.test.SpatialTests;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import junit.framework.Assert;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.mock;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/conf/spring-test.xml")
 @Category(SpatialTests.class)
+@Transactional
 public class LocationControllerTest {
 
     MockHttpServletRequest requestMock;

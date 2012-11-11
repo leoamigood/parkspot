@@ -10,11 +10,10 @@ import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernatespatial.criterion.SpatialRestrictions;
+import org.hibernate.spatial.criterion.SpatialRestrictions;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -26,14 +25,12 @@ import java.util.List;
  *         Time: 10:51 AM
  */
 @Repository
-public class DotDAOImpl extends HibernateTemplate implements DotDAO {
+public class DotDAOImpl implements DotDAO {
     @Loggable
     private static Logger logger;
 
     @Autowired
-    public DotDAOImpl(SessionFactory sessionFactory) {
-        setSessionFactory(sessionFactory);
-    }
+    private SessionFactory sessionFactory;
 
     @Cacheable(value = "closestLocations", key = "#coordinates.toString() + #distance")
     public List<Location> getLocations(Coordinates coordinates, Double distance) throws LocationException {
@@ -41,7 +38,8 @@ public class DotDAOImpl extends HibernateTemplate implements DotDAO {
         try {
             Geometry filter = (new WKTReader()).read(geometry);
 
-            Criteria criteria = getSession().createCriteria(Location.class);
+            Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Location.class);
+            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             criteria.add(SpatialRestrictions.within("centerGeo", filter));
             List<Location> locations = criteria.list();
 

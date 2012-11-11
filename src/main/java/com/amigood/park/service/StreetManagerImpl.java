@@ -6,6 +6,7 @@ import com.amigood.park.dao.DotDAO;
 import com.amigood.park.exception.LocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  *         Time: 12:02 PM
  */
 @Service
+@Transactional(readOnly = true)
 public class StreetManagerImpl implements StreetManager {
 
     @Autowired
