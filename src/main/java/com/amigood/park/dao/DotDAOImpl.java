@@ -9,6 +9,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.spatial.criterion.SpatialRestrictions;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class DotDAOImpl implements DotDAO {
             Geometry filter = (new WKTReader()).read(geometry);
 
             Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Location.class);
+            criteria.setFetchMode("signs", FetchMode.JOIN);
             criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             criteria.add(SpatialRestrictions.within("centerGeo", filter));
             List<Location> locations = criteria.list();

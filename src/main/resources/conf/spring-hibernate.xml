@@ -38,7 +38,7 @@
             <property name="hibernateProperties">
                 <value>
                     hibernate.format_sql = true
-                    hibernate.show_sql = true
+                    hibernate.show_sql = false
                     hibernate.dialect = org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
                     hibernate.cache.use_second_level_cache = false
                     hibernate.cache.region.factory_class = net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory
@@ -106,7 +106,6 @@
                     hibernate.format_sql = true
                     hibernate.show_sql = false
                     hibernate.dialect = org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
-                    <!--hibernate.connection.release_mode = after_statement-->
                     hibernate.cache.use_second_level_cache = false
                     hibernate.cache.region.factory_class = net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory
                     hibernate.generate_statistics = false

@@ -49,7 +49,7 @@ public class Location implements Serializable {
     @EmbeddedId
     private LocationPk id;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @JoinColumns({@JoinColumn(name = "borough"), @JoinColumn(name = "sign_number")})
     @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
     private List<ParkingSign> signs;
