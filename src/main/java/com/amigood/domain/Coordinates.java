@@ -28,6 +28,11 @@ public class Coordinates {
     public Coordinates() {
     }
 
+    public Coordinates(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Coordinates(String latitude, String longitude) {
         this.latitude = Double.parseDouble(latitude);
         this.longitude = Double.parseDouble(longitude);

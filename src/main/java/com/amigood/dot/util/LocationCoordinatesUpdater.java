@@ -9,6 +9,8 @@ import com.amigood.mvc.interceptor.ClientHeaderInterceptor;
 import com.amigood.park.exception.IntersectionException;
 import com.amigood.park.exception.LocationException;
 import com.amigood.park.service.GoogleLocationManager;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
 import org.apache.http.HttpHost;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -44,6 +46,7 @@ public class LocationCoordinatesUpdater {
     private static Logger logger;
 
     private Random random = new Random();
+    private WKTReader wktReader = new WKTReader();
 
     public static final int MAX_SLEEP_TIMEOUT = 1000;
 
@@ -105,12 +108,14 @@ public class LocationCoordinatesUpdater {
                     }
 
                     if (from != null && to != null) {
-                        location.setCenterLat((from.getLatitude() + to.getLatitude()) / 2);
-                        location.setCenterLng((from.getLongitude() + to.getLongitude()) / 2);
+                        Coordinates center = new Coordinates((from.getLatitude() + to.getLatitude()) / 2, (from.getLongitude() + to.getLongitude()) / 2);
+                        location.setCenter(center, wktReader);
                         location.setLength(Math.sqrt(Math.pow(from.getLatitude() - to.getLatitude(), 2) + Math.pow(from.getLongitude() - to.getLongitude(), 2)));
                     }
                 } catch (IntersectionException ie) {
                     logger.error("Cant find location for " + location.getSign() + ": " + ie.getMessage());
+                } catch (ParseException e) {
+                    logger.error("Cant store location for " + location.getSign() + ": " + e.getMessage());
                 } finally {
                     location.setCoordinates(from, to);
                     location.setValidated(true);

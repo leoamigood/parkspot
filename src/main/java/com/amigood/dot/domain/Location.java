@@ -3,6 +3,8 @@ package com.amigood.dot.domain;
 import com.amigood.domain.Coordinates;
 import com.amigood.domain.LocationAddress;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -257,16 +259,14 @@ public class Location implements Serializable {
         return centerLat;
     }
 
-    public void setCenterLat(Double centerLat) {
-        this.centerLat = centerLat;
-    }
-
     public Double getCenterLng() {
         return centerLng;
     }
 
-    public void setCenterLng(Double centerLng) {
-        this.centerLng = centerLng;
+    public void setCenter(Coordinates center, WKTReader wktReader) throws ParseException {
+        this.centerLat = center.getLatitude();
+        this.centerLng = center.getLongitude();
+        this.centerGeo = (Point) wktReader.read(String.format("POINT(%.8f %.8f)", centerLat, centerLng));
     }
 
     public Double getLength() {
